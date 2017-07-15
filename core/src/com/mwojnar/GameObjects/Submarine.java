@@ -195,6 +195,9 @@ public class Submarine extends Entity {
 			else
 				tweenBubble();
 			
+			if (stickBubble.getSprite() == AssetLoader.spriteBubblePop)
+				stickBubble = null;
+			
 		}
 		handleCollisions();
 		handleChargeFrames();

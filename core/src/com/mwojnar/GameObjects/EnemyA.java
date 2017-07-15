@@ -2,6 +2,7 @@ package com.mwojnar.GameObjects;
 
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.mwojnar.Assets.AssetLoader;
 import com.mwojnar.GameWorld.GMTKJamWorld;
@@ -22,7 +23,7 @@ public class EnemyA extends Entity {
 		super(myWorld);
 		setSprite(AssetLoader.spriteEnemyA);
 		setPivot(getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f);
-		setMask(new Mask(this, new Vector2(getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f), 44.0f));
+		setMask(new Mask(this, new Vector2(getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f), 22.0f));
 		setDepth(40);
 		isLeft = ((GMTKJamWorld)getWorld()).getRandom().nextBoolean();
 		setAnimationSpeed(10.0f);
@@ -55,6 +56,34 @@ public class EnemyA extends Entity {
 		
 		if (getPos(false).y > getWorld().getCamPos(false).y + getWorld().getGameDimensions().y)
 			destroy();
+		
+		handleCollisions();
+		
+	}
+	
+	private void handleCollisions() {
+		
+		for (Entity entity : getWorld().getEntityList()) {
+			
+			if (entity instanceof Bubble) {
+				
+				if (collisionsWith(entity).size() > 0)
+					((Bubble)entity).pop();
+				
+			} else if (entity instanceof CrumblyWall) {
+				
+				if (collisionsWith(entity).size() > 0) {
+					
+					if (entity.getPos(true).x < getPos(true).x)
+						isLeft = false;
+					else
+						isLeft = true;
+					
+				}
+				
+			}
+			
+		}
 		
 	}
 	
