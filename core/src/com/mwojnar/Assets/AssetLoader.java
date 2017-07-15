@@ -111,9 +111,9 @@ public class AssetLoader {
 	
 	private static void loadMusic() {
 		
-		//mainMusic = new MusicTemplate(Gdx.files.internal("data/Music/INSERT_MAIN_MUSIC_HERE"));
-		//mainMusic.setLooping(true);
-		//musicHandler.addMusic(mainMusic);
+		mainMusic = new MusicTemplate(Gdx.files.internal("data/Music/AquaAscent_Theme.mp3"));
+		mainMusic.setLooping(true);
+		musicHandler.addMusic(mainMusic);
 		
 	}
 	

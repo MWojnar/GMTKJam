@@ -87,6 +87,21 @@ public class GMTKJamWorld extends GameWorld {
 		submarine = new Submarine(this);
 		submarine.setPos(200.0f, 320.0f, true);
 		createEntity(submarine);
+		addBackgrounds();
+		AssetLoader.musicHandler.startMusic(AssetLoader.mainMusic);
+		
+		//setViewEntity(submarine);
+		//setGMTKJamView();
+		/*if (loadMenus) {
+			
+			startMenu();
+			
+		}*/
+		
+	}
+	
+	private void addBackgrounds() {
+
 		mainBackground = new Background(AssetLoader.background);
 		mainBackground.setTilingY(true);
 		mainBackground.setParallax(new Vector2(1.0f, 0.0f));
@@ -102,13 +117,6 @@ public class GMTKJamWorld extends GameWorld {
 		Background backWall = new Background(AssetLoader.backWall);
 		backWall.setTilingY(true);
 		addBackground(backWall);
-		//setViewEntity(submarine);
-		//setGMTKJamView();
-		/*if (loadMenus) {
-			
-			startMenu();
-			
-		}*/
 		
 	}
 	
