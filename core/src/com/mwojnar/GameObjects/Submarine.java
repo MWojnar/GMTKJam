@@ -26,7 +26,7 @@ public class Submarine extends Entity {
 				  chargeMultiplier, superChargeMultiplier, superChargeThreshold, maxCharge,
 				  boostDeceleration, verticalDeceleration, airLossRate, airLossFromEnemy, airGainRate,
 				  maxAir, minVerticalSpeed, maxVerticalSpeed, chargeCooldownMultiplier,
-				  superChargeCooldownAddition;
+				  superChargeCooldownAddition, minChargeSpeed;
 	private float charge = 0.0f, air = 0.0f;
 	private int cooldownLeft = 0;
 	private boolean superCooldown = false;
@@ -69,6 +69,7 @@ public class Submarine extends Entity {
 			maxVerticalSpeed = Float.parseFloat((String)jsonObject.get("Maximum vertical speed"));
 			chargeCooldownMultiplier = Float.parseFloat((String)jsonObject.get("Charge cooldown multiplier"));
 			superChargeCooldownAddition = Float.parseFloat((String)jsonObject.get("Super Charge cooldown add"));
+			minChargeSpeed = Float.parseFloat((String)jsonObject.get("Minimum speed a charge sends you upward"));
 			
 			air = maxAir;
 			
@@ -92,6 +93,7 @@ public class Submarine extends Entity {
 			maxVerticalSpeed = 20.0f;
 			chargeCooldownMultiplier = 2.0f;
 			superChargeCooldownAddition = 60.0f;
+			minChargeSpeed = 2.0f;
 			
 			air = maxAir;
 
@@ -189,7 +191,7 @@ public class Submarine extends Entity {
 			superCooldown = true;
 			
 		}
-		setGridVelocity(getGridVelocity().x, -charge * multiplier);
+		setGridVelocity(getGridVelocity().x, -charge * multiplier + minChargeSpeed);
 		charge = 0;
 		setSprite(AssetLoader.spriteSubmarine);
 		
