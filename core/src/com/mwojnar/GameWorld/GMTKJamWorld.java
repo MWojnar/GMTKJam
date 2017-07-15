@@ -88,9 +88,20 @@ public class GMTKJamWorld extends GameWorld {
 		submarine.setPos(200.0f, 320.0f, true);
 		createEntity(submarine);
 		mainBackground = new Background(AssetLoader.background);
-		mainBackground.setTilingX(true);
 		mainBackground.setTilingY(true);
+		mainBackground.setParallax(new Vector2(1.0f, 0.0f));
 		addBackground(mainBackground);
+		Background parallaxWall2 = new Background(AssetLoader.parallaxWall2);
+		parallaxWall2.setTilingY(true);
+		parallaxWall2.setParallax(new Vector2(1.0f, 0.35f));
+		addBackground(parallaxWall2);
+		Background parallaxWall1 = new Background(AssetLoader.parallaxWall1);
+		parallaxWall1.setTilingY(true);
+		parallaxWall1.setParallax(new Vector2(1.0f, 0.6f));
+		addBackground(parallaxWall1);
+		Background backWall = new Background(AssetLoader.backWall);
+		backWall.setTilingY(true);
+		addBackground(backWall);
 		//setViewEntity(submarine);
 		//setGMTKJamView();
 		/*if (loadMenus) {
@@ -194,7 +205,7 @@ public class GMTKJamWorld extends GameWorld {
 	private void spawnObstacles() {
 		
 		Bubble bubble = new Bubble(this);
-		bubble.setPos(rand.nextFloat() * (getGameDimensions().x - 100.0f) + 50.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
+		bubble.setPos(rand.nextFloat() * (getGameDimensions().x - 300.0f) + 150.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
 		createEntity(bubble);
 		
 		EnemyA enemy = new EnemyA(this);
@@ -202,11 +213,11 @@ public class GMTKJamWorld extends GameWorld {
 		createEntity(enemy);
 		
 		Mine mine = new Mine(this);
-		mine.setPos(rand.nextFloat() * (getGameDimensions().x - 300.0f) + 150.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
+		mine.setPos(rand.nextFloat() * (getGameDimensions().x - 200.0f) + 100.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
 		createEntity(mine);
 		
 		CrumblyWall wall = new CrumblyWall(this);
-		wall.setPos(rand.nextFloat() * (getGameDimensions().x - 300.0f) + 150.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
+		wall.setPos(rand.nextFloat() * (getGameDimensions().x - 200.0f) + 100.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
 		createEntity(wall);
 		
 	}

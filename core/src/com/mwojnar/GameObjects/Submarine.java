@@ -83,7 +83,7 @@ public class Submarine extends Entity {
 			
 		} catch (Exception e) {
 			
-			chargeSpeed = 0.5f;
+			chargeSpeed = 2.0f;
 			horizontalMaxSpeed = 8.0f;
 			horizontalAcceleration = 0.5f;
 			horizontalDeceleration = 0.25f;
@@ -92,7 +92,7 @@ public class Submarine extends Entity {
 			superChargeThreshold = 18.0f;
 			maxCharge = 24.0f;
 			boostDeceleration = 3.0f;
-			verticalDeceleration = 1.0f;
+			verticalDeceleration = 0.2f;
 			airLossRate = 0.005f;
 			airLossFromEnemy = 0.1f;
 			airGainRate = 0.05f;
@@ -187,6 +187,10 @@ public class Submarine extends Entity {
 		if (Math.abs(getGridVelocity().x) > horizontalMaxSpeed)
 			setGridVelocity(horizontalMaxSpeed * Math.signum(getGridVelocity().x), getGridVelocity().y);
 		moveByVelocity();
+		if (getPos(false).x < 40.0f)
+			setPos(40.0f, getPos(false).y, false);
+		else if (getPos(false).x + getSprite().getWidth() > getWorld().getGameDimensions().x - 40.0f)
+			setPos(getWorld().getGameDimensions().x - 40.0f - getSprite().getWidth(), getPos(false).y, false);
 		if (stickBubble != null) {
 			
 			setGridVelocity(getGridVelocity().x, getGridVelocity().y + boostDeceleration);

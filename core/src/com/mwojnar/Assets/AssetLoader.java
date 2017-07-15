@@ -35,13 +35,14 @@ public class AssetLoader {
 	public static Texture wojworksTexture;
 	public static TextureRegion submarineTexture, enemyATexture, bubbleTexture, wallTexture, backgroundTexture,
 								chargeMeterTexture, submarineChargingTexture, bubblePopTexture, airMeterTexture,
-								submarineAttackFireTexture, particleBubbleTexture, mineTexture, crumblyWallTexture;
+								submarineAttackFireTexture, particleBubbleTexture, mineTexture, crumblyWallTexture,
+								backWallTexture, parallaxWall1Texture, parallaxWall2Texture;
 	public static TextureRegion whiteTexture, yellowTexture, redTexture;
 	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall, spriteChargeMeter,
 						 spriteSubmarineCharging, spriteBubblePop, spriteAirMeter, spriteSubmarineAttackFire,
 						 spriteParticleBubble, spriteMine, spriteCrumblyWall;
 	public static Sprite spriteWhite, spriteYellow, spriteRed;
-	public static BackgroundTemplate background;
+	public static BackgroundTemplate background, backWall, parallaxWall1, parallaxWall2;
 	public static MusicTemplate mainMusic;
 	public static MusicHandler musicHandler;
 	public static List<Class<? extends Entity>> classList = new ArrayList<Class<? extends Entity>>();
@@ -140,6 +141,9 @@ public class AssetLoader {
 		crumblyWallTexture = atlas.findRegion("spr_breakablewall");
 		
 		backgroundTexture = atlas.findRegion("background");
+		backWallTexture = atlas.findRegion("ts_walls");
+		parallaxWall1Texture = atlas.findRegion("ts_parallax1");
+		parallaxWall2Texture = atlas.findRegion("ts_parallax2");
 		
 		whiteTexture = atlas.findRegion("white");
 		yellowTexture = atlas.findRegion("yellow");
@@ -164,6 +168,9 @@ public class AssetLoader {
 		spriteWall = new Sprite(wallTexture, 1);
 		
 		background = new BackgroundTemplate(backgroundTexture, 1);
+		backWall = new BackgroundTemplate(backWallTexture, 1);
+		parallaxWall1 = new BackgroundTemplate(parallaxWall1Texture, 1);
+		parallaxWall2 = new BackgroundTemplate(parallaxWall2Texture, 1);
 		
 		spriteWhite = new Sprite(whiteTexture, 1);
 		spriteYellow = new Sprite(yellowTexture, 1);
