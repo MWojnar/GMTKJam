@@ -56,7 +56,8 @@ public class EnemyA extends Entity {
 	@Override
 	public void draw(GameRenderer renderer) {
 		
-		getSprite().draw(getPos(false).x, getPos(false).y, getFrame(), isLeft ? 1.0f : -1.0f, 1.0f, getRotation(), getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f, renderer);
+		float rotation = (float)Math.sin(((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() / 20.0f + 0.75f) * 90.0f / (float)Math.PI;
+		getSprite().draw(getPos(false).x, getPos(false).y, getFrame(), isLeft ? 1.0f : -1.0f, 1.0f, isLeft ? -rotation : rotation, getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f, renderer);
 		
 	}
 	
