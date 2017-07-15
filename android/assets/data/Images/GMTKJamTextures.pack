@@ -5,119 +5,140 @@ filter: Nearest,Nearest
 repeat: none
 background
   rotate: false
-  xy: 900, 2
+  xy: 952, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 icon16
   rotate: false
-  xy: 180, 62
+  xy: 996, 72
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 icon32
   rotate: false
-  xy: 212, 40
+  xy: 72, 132
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 icon128
   rotate: false
-  xy: 2, 40
+  xy: 948, 126
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 red
   rotate: false
-  xy: 202, 62
+  xy: 1018, 72
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
+spr_air_meter
+  rotate: false
+  xy: 2, 2
+  size: 944, 64
+  orig: 944, 64
+  offset: 0, 0
+  index: -1
 spr_breakablewall
   rotate: false
-  xy: 142, 62
+  xy: 2, 148
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 spr_bubble
   rotate: false
-  xy: 798, 2
+  xy: 846, 126
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 spr_bubble_pop
   rotate: false
-  xy: 648, 2
+  xy: 846, 72
   size: 144, 48
   orig: 144, 48
   offset: 0, 0
   index: -1
 spr_charge_meter
   rotate: false
-  xy: 142, 40
+  xy: 72, 110
   size: 64, 16
   orig: 64, 16
   offset: 0, 0
   index: -1
 spr_enemyA
   rotate: false
-  xy: 970, 2
+  xy: 212, 110
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 spr_mine
   rotate: false
-  xy: 970, 56
+  xy: 142, 124
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
+spr_propulsion_bubble
+  rotate: false
+  xy: 142, 110
+  size: 64, 8
+  orig: 64, 8
+  offset: 0, 0
+  index: -1
 spr_sub
   rotate: false
-  xy: 72, 78
+  xy: 40, 170
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
+spr_sub_attack_fire
+  rotate: false
+  xy: 648, 72
+  size: 192, 64
+  orig: 192, 64
+  offset: 0, 0
+  index: -1
 spr_sub_charging
   rotate: false
-  xy: 2, 2
+  xy: 2, 72
   size: 640, 32
   orig: 640, 32
   offset: 0, 0
   index: -1
 spr_sub_hb
   rotate: false
-  xy: 2, 110
+  xy: 2, 186
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 ts_walls
   rotate: false
-  xy: 72, 40
+  xy: 2, 110
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 202, 69
+  xy: 1018, 79
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 yellow
   rotate: false
-  xy: 202, 76
+  xy: 1018, 86
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

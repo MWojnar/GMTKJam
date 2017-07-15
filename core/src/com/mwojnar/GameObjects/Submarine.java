@@ -126,8 +126,14 @@ public class Submarine extends Entity {
 			air -= airLossRate;
 		else
 			air += airGainRate;
-		if (air <= 0)
+		if (air <= 0) {
+			
 			die();
+			air = 0;
+			
+		}
+		if (air > maxAir)
+			air = maxAir;
 		boolean boosting = false;
 		if (keysDown.contains(com.badlogic.gdx.Input.Keys.SPACE) && cooldownLeft <= 0)
 			boosting = true;
@@ -282,6 +288,13 @@ public class Submarine extends Entity {
 	public void draw(GameRenderer renderer) {
 		
 		super.draw(renderer);
+		
+		int frame = (int)(59.0f - (59.0f * air / maxAir));
+		if (frame > 58)
+			frame = 58;
+		if (frame < 0)
+			frame = 0;
+		AssetLoader.spriteAirMeter.drawAbsolute(2.0f, getWorld().getGameDimensions().y - AssetLoader.spriteAirMeter.getHeight() - 2.0f, frame, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
 		/*AssetLoader.spriteChargeMeter.drawAbsolute(0.0f, 0.0f, 0, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
 		Vector2 whiteRectangleDimensions = new Vector2(AssetLoader.spriteChargeMeter.getWidth(), AssetLoader.spriteChargeMeter.getHeight());
 		if (charge > superChargeThreshold) {
