@@ -33,8 +33,9 @@ public class AssetLoader {
 	public static AssetManager assetManager;
 	private static TextureAtlas atlas;
 	public static Texture wojworksTexture;
-	public static TextureRegion submarineTexture, enemyATexture, bubbleTexture, wallTexture;
+	public static TextureRegion submarineTexture, enemyATexture, bubbleTexture, wallTexture, backgroundTexture;
 	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall;
+	public static BackgroundTemplate background;
 	public static MusicTemplate mainMusic;
 	public static MusicHandler musicHandler;
 	public static List<Class<? extends Entity>> classList = new ArrayList<Class<? extends Entity>>();
@@ -125,6 +126,8 @@ public class AssetLoader {
 		
 		wallTexture = atlas.findRegion("ts_walls");
 		
+		backgroundTexture = atlas.findRegion("background");
+		
 	}
 	
 	private static void loadSprites() {
@@ -134,6 +137,8 @@ public class AssetLoader {
 		spriteBubble = new Sprite(bubbleTexture, 1);
 		
 		spriteWall = new Sprite(wallTexture, 1);
+		
+		background = new BackgroundTemplate(backgroundTexture, 1);
 		
 	}
 	

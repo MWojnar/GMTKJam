@@ -10,8 +10,8 @@ public class DesktopLauncher {
     public static void main (String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.title = "Reaper Rampage";
-        config.height = 720;
-        config.width = 1280;
+        config.height = 640;
+        config.width = 400;
         config.addIcon("data/Images/icon128.png", FileType.Internal);
         config.addIcon("data/Images/icon32.png", FileType.Internal);
         config.addIcon("data/Images/icon16.png", FileType.Internal);

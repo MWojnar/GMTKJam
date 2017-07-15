@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mwojnar.Game.GMTKJamGame;
+import com.mwojnar.GameObjects.Submarine;
 import com.mwojnar.GameWorld.GMTKJamWorld.Mode;
 import com.mwojnar.Assets.AssetLoader;
 import com.playgon.GameEngine.Background;
@@ -31,12 +32,14 @@ public class GMTKJamWorld extends GameWorld {
 
 	public enum Mode { MENU, GAME, HIGHSCORE }
 	
-	private Mode mode = Mode.MENU;
+	private Mode mode = Mode.GAME;
 	private LoadingThread loadingThread = null;
 	private boolean showFPS = true, paused = false;
 	private long framesSinceLevelCreation = 0;
 	private FileHandle levelToLoad = null;
 	private Random rand = new Random();
+	private Background mainBackground;
+	private Submarine submarine;
 	
 	public GMTKJamWorld() {
 		
@@ -76,11 +79,20 @@ public class GMTKJamWorld extends GameWorld {
 			}
 			
 		}
-		if (loadMenus) {
+		submarine = new Submarine(this);
+		submarine.setPos(200.0f, 320.0f, true);
+		createEntity(submarine);
+		mainBackground = new Background(AssetLoader.background);
+		mainBackground.setTilingX(true);
+		mainBackground.setTilingY(true);
+		addBackground(mainBackground);
+		//setViewEntity(submarine);
+		//setGMTKJamView();
+		/*if (loadMenus) {
 			
 			startMenu();
 			
-		}
+		}*/
 		
 	}
 	
@@ -155,7 +167,7 @@ public class GMTKJamWorld extends GameWorld {
 			super.updateMain(delta);
 			if (mode == Mode.GAME) {
 				
-				
+				setCamPos(new Vector2(getCamPos(true).x, submarine.getPos(false).y - 200.0f - submarine.getGridVelocity().y * 2.0f));
 				
 			}
 			

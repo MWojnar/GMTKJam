@@ -26,7 +26,7 @@ public class GameScreen implements Screen {
 		Gdx.input.setCatchMenuKey(false);
 		
 		world = new GMTKJamWorld();
-		Gdx.input.setInputProcessor(new InputHandler(world, screenWidth / gameWidth, screenHeight / gameHeight));
+		Gdx.input.setInputProcessor(new InputHandler(world, gameWidth, gameHeight));
 		renderer = new GMTKJamRenderer(world, (int) gameWidth, (int) gameHeight);
 		world.setRenderer(renderer);
 		

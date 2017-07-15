@@ -1,32 +1,81 @@
 GMTKJamTextures.png
-size: 128, 128
+size: 1024, 1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
+background
+  rotate: false
+  xy: 756, 40
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+icon16
+  rotate: false
+  xy: 756, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+icon32
+  rotate: false
+  xy: 718, 40
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+icon128
+  rotate: false
+  xy: 648, 2
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 spr_bubble
   rotate: false
-  xy: 72, 2
+  xy: 858, 2
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
+spr_charge_meter
+  rotate: false
+  xy: 788, 2
+  size: 64, 16
+  orig: 64, 16
+  offset: 0, 0
+  index: -1
 spr_enemyA
   rotate: false
-  xy: 2, 40
+  xy: 788, 24
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 spr_sub
   rotate: false
-  xy: 2, 94
+  xy: 912, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+spr_sub_charging
+  rotate: false
+  xy: 2, 2
+  size: 640, 32
+  orig: 640, 32
+  offset: 0, 0
+  index: -1
+spr_sub_hb
+  rotate: false
+  xy: 950, 2
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 ts_walls
   rotate: false
-  xy: 2, 2
+  xy: 718, 2
   size: 64, 32
   orig: 64, 32
   offset: 0, 0

@@ -23,7 +23,6 @@ public class GMTKJamRenderer extends GameRenderer {
 	@Override
 	public void render(float delta, float runTime) {
 		
-		setCamPos(new Vector2(getDimensions().x / 2.0f, getDimensions().y / 2.0f));
 		if (AssetLoader.assetManager.update()) {
 			
 			if (!AssetLoader.loaded) {
