@@ -13,6 +13,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.mwojnar.Assets.AssetLoader;
+import com.mwojnar.GameWorld.GMTKJamWorld;
 import com.playgon.GameEngine.Entity;
 import com.playgon.GameEngine.Mask;
 import com.playgon.GameEngine.Sprite;
@@ -197,9 +198,26 @@ public class Submarine extends Entity {
 		}
 		handleCollisions();
 		handleChargeFrames();
+		if (superBoostCooldown > 0)
+			tryCreateBubble();
 		
 	}
 	
+	private void tryCreateBubble() {
+		
+		if (((GMTKJamWorld)getWorld()).getRandom().nextInt(2) == 0)
+			createBubble();
+		
+	}
+
+	private void createBubble() {
+		
+		ParticleBubble bubble = new ParticleBubble(getWorld());
+		bubble.setPos(getPos(false).x + getSprite().getWidth() * ((GMTKJamWorld)getWorld()).getRandom().nextFloat(), getPos(false).y + getSprite().getHeight(), true);
+		getWorld().createEntity(bubble);
+		
+	}
+
 	private void tweenBubble() {
 		
 		float distanceToCenterOfBubble = PlaygonMath.distance(getPos(true), stickBubble.getPos(true));

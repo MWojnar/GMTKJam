@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mwojnar.Game.GMTKJamGame;
 import com.mwojnar.GameObjects.Bubble;
+import com.mwojnar.GameObjects.EnemyA;
 import com.mwojnar.GameObjects.Submarine;
 import com.mwojnar.GameWorld.GMTKJamWorld.Mode;
 import com.mwojnar.Assets.AssetLoader;
@@ -193,6 +194,10 @@ public class GMTKJamWorld extends GameWorld {
 		Bubble bubble = new Bubble(this);
 		bubble.setPos(rand.nextFloat() * (getGameDimensions().x - 100.0f) + 50.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
 		createEntity(bubble);
+		
+		EnemyA enemy = new EnemyA(this);
+		enemy.setPos(rand.nextFloat() * (getGameDimensions().x - 300.0f) + 150.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
+		createEntity(enemy);
 		
 	}
 

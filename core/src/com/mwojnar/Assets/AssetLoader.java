@@ -35,10 +35,11 @@ public class AssetLoader {
 	public static Texture wojworksTexture;
 	public static TextureRegion submarineTexture, enemyATexture, bubbleTexture, wallTexture, backgroundTexture,
 								chargeMeterTexture, submarineChargingTexture, bubblePopTexture, airMeterTexture,
-								submarineAttackFireTexture;
+								submarineAttackFireTexture, particleBubbleTexture, mineTexture, crumblyWallTexture;
 	public static TextureRegion whiteTexture, yellowTexture, redTexture;
 	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall, spriteChargeMeter,
-						 spriteSubmarineCharging, spriteBubblePop, spriteAirMeter, spriteSubmarineAttackFire;
+						 spriteSubmarineCharging, spriteBubblePop, spriteAirMeter, spriteSubmarineAttackFire,
+						 spriteParticleBubble, spriteMine, spriteCrumblyWall;
 	public static Sprite spriteWhite, spriteYellow, spriteRed;
 	public static BackgroundTemplate background;
 	public static MusicTemplate mainMusic;
@@ -134,6 +135,9 @@ public class AssetLoader {
 		bubblePopTexture = atlas.findRegion("spr_bubble_pop");
 		airMeterTexture = atlas.findRegion("spr_air_meter");
 		submarineAttackFireTexture = atlas.findRegion("spr_sub_attack_fire");
+		particleBubbleTexture = atlas.findRegion("spr_propulsion_bubble");
+		mineTexture = atlas.findRegion("spr_mine");
+		crumblyWallTexture = atlas.findRegion("spr_breakablewall");
 		
 		backgroundTexture = atlas.findRegion("background");
 		
@@ -153,6 +157,9 @@ public class AssetLoader {
 		spriteBubblePop = new Sprite(bubblePopTexture, 3);
 		spriteAirMeter = new Sprite(airMeterTexture, 59);
 		spriteSubmarineAttackFire = new Sprite(submarineAttackFireTexture, 3);
+		spriteParticleBubble = new Sprite(particleBubbleTexture, 8);
+		spriteMine = new Sprite(mineTexture, 1);
+		spriteCrumblyWall = new Sprite(crumblyWallTexture, 1);
 		
 		spriteWall = new Sprite(wallTexture, 1);
 		
