@@ -25,9 +25,14 @@ public class Submarine extends Entity {
 	private float chargeSpeed, horizontalMaxSpeed, horizontalAcceleration, horizontalDeceleration,
 				  chargeMultiplier, superChargeMultiplier, superChargeThreshold, maxCharge,
 				  boostDeceleration, verticalDeceleration, airLossRate, airLossFromEnemy, airGainRate,
-				  maxAir, minVerticalSpeed, maxVerticalSpeed, chargeCooldownMultiplier;
+				  maxAir, minVerticalSpeed, maxVerticalSpeed, chargeCooldownMultiplier,
+				  superChargeCooldownAddition;
 	private float charge = 0.0f, air = 0.0f;
 	private int cooldownLeft = 0;
+	private boolean superCooldown = false;
+	private ChargeMode chargeMode = ChargeMode.IDLE;
+	
+	private enum ChargeMode { IDLE, CHARGING, UNCHARGING }
 	
 	public Submarine(GameWorld myWorld) {
 		
@@ -63,6 +68,7 @@ public class Submarine extends Entity {
 			minVerticalSpeed = Float.parseFloat((String)jsonObject.get("Minimum vertical speed"));
 			maxVerticalSpeed = Float.parseFloat((String)jsonObject.get("Maximum vertical speed"));
 			chargeCooldownMultiplier = Float.parseFloat((String)jsonObject.get("Charge cooldown multiplier"));
+			superChargeCooldownAddition = Float.parseFloat((String)jsonObject.get("Super Charge cooldown add"));
 			
 			air = maxAir;
 			
@@ -85,6 +91,7 @@ public class Submarine extends Entity {
 			minVerticalSpeed = 0.1f;
 			maxVerticalSpeed = 20.0f;
 			chargeCooldownMultiplier = 2.0f;
+			superChargeCooldownAddition = 60.0f;
 			
 			air = maxAir;
 
@@ -112,13 +119,16 @@ public class Submarine extends Entity {
 			
 			charge += chargeSpeed;
 			setGridVelocity(getGridVelocity().x, getGridVelocity().y + boostDeceleration);
-			setAnimationSpeed(15.0f);
-			setSprite(AssetLoader.spriteSubmarineCharging);
+			chargeMode = ChargeMode.CHARGING;
 			
 		} else
 			setGridVelocity(getGridVelocity().x, getGridVelocity().y + verticalDeceleration);
 		if (charge > maxCharge || (charge > 0 && !keysDown.contains(com.badlogic.gdx.Input.Keys.SPACE)))
 			burst();
+		if (cooldownLeft > 0)
+			chargeMode = ChargeMode.UNCHARGING;
+		else if (!boosting)
+			chargeMode = ChargeMode.IDLE;
 		if (keysDown.contains(com.badlogic.gdx.Input.Keys.LEFT))
 			setGridVelocity(getGridVelocity().x - horizontalAcceleration, getGridVelocity().y);
 		else if (keysDown.contains(com.badlogic.gdx.Input.Keys.RIGHT))
@@ -139,6 +149,26 @@ public class Submarine extends Entity {
 		if (Math.abs(getGridVelocity().x) > horizontalMaxSpeed)
 			setGridVelocity(horizontalMaxSpeed * Math.signum(getGridVelocity().x), getGridVelocity().y);
 		moveByVelocity();
+		switch (chargeMode) {
+		
+		case IDLE: setSprite(AssetLoader.spriteSubmarine); break;
+		case CHARGING: setSprite(AssetLoader.spriteSubmarineCharging);
+			 if (charge < superChargeThreshold)
+				 setFrame((int)(charge * 10 / superChargeThreshold));
+			 else
+				 setFrame((int)(10 + (charge - superChargeThreshold) * 10 / (maxCharge - superChargeThreshold)));
+			 break;
+		case UNCHARGING: setSprite(AssetLoader.spriteSubmarineCharging);
+			 float chargeEquivalent = (cooldownLeft / (maxCharge * chargeCooldownMultiplier)) * maxCharge;
+			 if (superCooldown)
+				 chargeEquivalent = (cooldownLeft / (maxCharge * chargeCooldownMultiplier + superChargeCooldownAddition)) * maxCharge;
+			 if (chargeEquivalent < superChargeThreshold)
+				 setFrame((int)(chargeEquivalent * 10 / superChargeThreshold));
+			 else
+				 setFrame((int)(10 + (chargeEquivalent - superChargeThreshold) * 10 / (maxCharge - superChargeThreshold)));
+			 break;
+		
+		}
 		
 	}
 	
@@ -149,10 +179,16 @@ public class Submarine extends Entity {
 
 	private void burst() {
 		
+		superCooldown = false;
 		cooldownLeft = (int)(charge * chargeCooldownMultiplier);
 		float multiplier = chargeMultiplier;
-		if (charge >= superChargeThreshold)
+		if (charge >= superChargeThreshold) {
+			
 			multiplier += superChargeMultiplier;
+			cooldownLeft += superChargeCooldownAddition;
+			superCooldown = true;
+			
+		}
 		setGridVelocity(getGridVelocity().x, -charge * multiplier);
 		charge = 0;
 		setSprite(AssetLoader.spriteSubmarine);
@@ -163,7 +199,7 @@ public class Submarine extends Entity {
 	public void draw(GameRenderer renderer) {
 		
 		super.draw(renderer);
-		AssetLoader.spriteChargeMeter.drawAbsolute(0.0f, 0.0f, 0, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
+		/*AssetLoader.spriteChargeMeter.drawAbsolute(0.0f, 0.0f, 0, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
 		Vector2 whiteRectangleDimensions = new Vector2(AssetLoader.spriteChargeMeter.getWidth(), AssetLoader.spriteChargeMeter.getHeight());
 		if (charge > superChargeThreshold) {
 			
@@ -174,7 +210,7 @@ public class Submarine extends Entity {
 			
 		} else 
 			whiteRectangleDimensions = new Vector2(AssetLoader.spriteChargeMeter.getWidth() * (charge / maxCharge), AssetLoader.spriteChargeMeter.getHeight());
-		drawRectangle(renderer, getWorld().getCamPos(false), whiteRectangleDimensions, AssetLoader.spriteYellow);
+		drawRectangle(renderer, getWorld().getCamPos(false), whiteRectangleDimensions, AssetLoader.spriteYellow);*/
 		
 	}
 	
