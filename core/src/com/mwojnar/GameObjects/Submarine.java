@@ -27,9 +27,10 @@ public class Submarine extends Entity {
 				  chargeMultiplier, superChargeMultiplier, superChargeThreshold, maxCharge,
 				  boostDeceleration, verticalDeceleration, airLossRate, airLossFromEnemy, airGainRate,
 				  maxAir, minVerticalSpeed, maxVerticalSpeed, chargeCooldownMultiplier,
-				  superChargeCooldownAddition, minChargeSpeed, bubbleChargeSpeed, bubbleAddSpeed;
+				  superChargeCooldownAddition, minChargeSpeed, bubbleChargeSpeed, bubbleAddSpeed,
+				  superBoostAttackDuration;
 	private float charge = 0.0f, air = 0.0f, currentMaxVerticalSpeed = 0.0f;
-	private int cooldownLeft = 0, bubbleTweenFrames = 0, startBubbleTweenFrames = 10;
+	private int cooldownLeft = 0, bubbleTweenFrames = 0, startBubbleTweenFrames = 10, superBoostCooldown = 0;
 	private boolean superCooldown = false, bubbleMaxSpeed = false;
 	private Bubble stickBubble = null;
 	private ChargeMode chargeMode = ChargeMode.IDLE;
@@ -74,6 +75,7 @@ public class Submarine extends Entity {
 			minChargeSpeed = Float.parseFloat((String)jsonObject.get("Minimum speed a charge sends you upward"));
 			bubbleChargeSpeed = Float.parseFloat((String)jsonObject.get("Charge Speed in bubble"));
 			bubbleAddSpeed = Float.parseFloat((String)jsonObject.get("Bubble add speed"));
+			superBoostAttackDuration = Float.parseFloat((String)jsonObject.get("Super Boost Attack duration"));
 			
 			air = maxAir;
 			currentMaxVerticalSpeed = maxVerticalSpeed;
@@ -101,6 +103,7 @@ public class Submarine extends Entity {
 			minChargeSpeed = 2.0f;
 			bubbleChargeSpeed = 0.5f;
 			bubbleAddSpeed = 20.0f;
+			superBoostAttackDuration = 150.0f;
 			
 			air = maxAir;
 			currentMaxVerticalSpeed = maxVerticalSpeed;
@@ -119,6 +122,9 @@ public class Submarine extends Entity {
 		cooldownLeft--;
 		if (cooldownLeft < 0)
 			cooldownLeft = 0;
+		superBoostCooldown--;
+		if (superBoostCooldown < 0)
+			superBoostCooldown = 0;
 		bubbleTweenFrames--;
 		if (bubbleTweenFrames < 0)
 			bubbleTweenFrames = 0;
@@ -215,6 +221,7 @@ public class Submarine extends Entity {
 						
 						stickBubble = (Bubble)entity;
 						bubbleTweenFrames = startBubbleTweenFrames;
+						superBoostCooldown = 0;
 						
 					}
 					
@@ -266,6 +273,7 @@ public class Submarine extends Entity {
 			multiplier += superChargeMultiplier;
 			cooldownLeft += superChargeCooldownAddition;
 			superCooldown = true;
+			superBoostCooldown = (int)superBoostAttackDuration;
 			
 		}
 		float boostSpeed = -charge * multiplier - minChargeSpeed;
@@ -286,6 +294,15 @@ public class Submarine extends Entity {
 
 	@Override
 	public void draw(GameRenderer renderer) {
+		
+		if (superBoostCooldown > 0) {
+			
+			float alpha = superBoostCooldown / 30.0f;
+			if (alpha > 1.0f)
+				alpha = 1.0f;
+			AssetLoader.spriteSubmarineAttackFire.draw(getPos(true).x - AssetLoader.spriteSubmarineAttackFire.getWidth() / 2.0f, getPos(true).y - AssetLoader.spriteSubmarineAttackFire.getHeight() / 2.0f, (10000 - superBoostCooldown) % 3, getScale(), getScale(), PlaygonMath.toRadians(getGridVelocity().x * 40.0f), AssetLoader.spriteSubmarineAttackFire.getWidth() / 2.0f, AssetLoader.spriteSubmarineAttackFire.getHeight() / 2.0f, alpha, renderer);
+			
+		}
 		
 		getSprite().draw(getPos(false).x, getPos(false).y, getFrame(), getScale(), getScale(), PlaygonMath.toRadians(getGridVelocity().x * 40.0f), getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f, renderer);
 		
