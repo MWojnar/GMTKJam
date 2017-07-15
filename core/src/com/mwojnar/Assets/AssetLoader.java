@@ -33,8 +33,12 @@ public class AssetLoader {
 	public static AssetManager assetManager;
 	private static TextureAtlas atlas;
 	public static Texture wojworksTexture;
-	public static TextureRegion submarineTexture, enemyATexture, bubbleTexture, wallTexture, backgroundTexture;
-	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall;
+	public static TextureRegion submarineTexture, enemyATexture, bubbleTexture, wallTexture, backgroundTexture,
+								chargeMeterTexture, submarineChargingTexture;
+	public static TextureRegion whiteTexture, yellowTexture, redTexture;
+	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall, spriteChargeMeter,
+						 spriteSubmarineCharging;
+	public static Sprite spriteWhite, spriteYellow, spriteRed;
 	public static BackgroundTemplate background;
 	public static MusicTemplate mainMusic;
 	public static MusicHandler musicHandler;
@@ -121,24 +125,35 @@ public class AssetLoader {
 	private static void loadTextures() {
 		
 		submarineTexture = atlas.findRegion("spr_sub");
+		submarineChargingTexture = atlas.findRegion("spr_sub_charging");
 		enemyATexture = atlas.findRegion("spr_enemyA");
 		bubbleTexture = atlas.findRegion("spr_bubble");
-		
+		chargeMeterTexture = atlas.findRegion("spr_charge_meter");
 		wallTexture = atlas.findRegion("ts_walls");
 		
 		backgroundTexture = atlas.findRegion("background");
+		
+		whiteTexture = atlas.findRegion("white");
+		yellowTexture = atlas.findRegion("yellow");
+		redTexture = atlas.findRegion("red");
 		
 	}
 	
 	private static void loadSprites() {
 		
 		spriteSubmarine = new Sprite(submarineTexture, 1);
+		spriteSubmarineCharging = new Sprite(submarineChargingTexture, 20);
 		spriteEnemyA = new Sprite(enemyATexture, 1);
 		spriteBubble = new Sprite(bubbleTexture, 1);
+		spriteChargeMeter = new Sprite(chargeMeterTexture, 1);
 		
 		spriteWall = new Sprite(wallTexture, 1);
 		
 		background = new BackgroundTemplate(backgroundTexture, 1);
+		
+		spriteWhite = new Sprite(whiteTexture, 1);
+		spriteYellow = new Sprite(yellowTexture, 1);
+		spriteRed = new Sprite(redTexture, 1);
 		
 	}
 	

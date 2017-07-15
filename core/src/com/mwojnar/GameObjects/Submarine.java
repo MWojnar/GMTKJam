@@ -10,10 +10,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.mwojnar.Assets.AssetLoader;
 import com.playgon.GameEngine.Entity;
 import com.playgon.GameEngine.Mask;
+import com.playgon.GameEngine.Sprite;
 import com.playgon.GameEngine.TouchEvent;
 import com.playgon.GameWorld.GameRenderer;
 import com.playgon.GameWorld.GameWorld;
@@ -31,7 +33,7 @@ public class Submarine extends Entity {
 		
 		super(myWorld);
 		setSprite(AssetLoader.spriteSubmarine);
-		setMask(new Mask(null, new Vector2(3.0f, 0.0f), new Vector2(26.0f, 32.0f)));
+		setMask(new Mask(this, new Vector2(3.0f, 0.0f), new Vector2(26.0f, 32.0f)));
 		setPivot(getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f);
 		setDepth(50);
 		loadCustomAttributes();
@@ -52,7 +54,7 @@ public class Submarine extends Entity {
 			superChargeMultiplier = Float.parseFloat((String)jsonObject.get("Speed added by super charge"));
 			superChargeThreshold = Float.parseFloat((String)jsonObject.get("Amount of Charge that equals Super Charge"));
 			maxCharge = Float.parseFloat((String)jsonObject.get("Max Charge"));
-			boostDeceleration = Float.parseFloat((String)jsonObject.get("Boost Charge declerate"));
+			boostDeceleration = Float.parseFloat((String)jsonObject.get("Boost Charge decelerate"));
 			verticalDeceleration = Float.parseFloat((String)jsonObject.get("Normal deceleration"));
 			airLossRate = Float.parseFloat((String)jsonObject.get("Air decrease speed"));
 			airLossFromEnemy = Float.parseFloat((String)jsonObject.get("Air hit reduction"));
@@ -110,6 +112,8 @@ public class Submarine extends Entity {
 			
 			charge += chargeSpeed;
 			setGridVelocity(getGridVelocity().x, getGridVelocity().y + boostDeceleration);
+			setAnimationSpeed(15.0f);
+			setSprite(AssetLoader.spriteSubmarineCharging);
 			
 		} else
 			setGridVelocity(getGridVelocity().x, getGridVelocity().y + verticalDeceleration);
@@ -147,10 +151,11 @@ public class Submarine extends Entity {
 		
 		cooldownLeft = (int)(charge * chargeCooldownMultiplier);
 		float multiplier = chargeMultiplier;
-		if (charge > superChargeThreshold)
+		if (charge >= superChargeThreshold)
 			multiplier += superChargeMultiplier;
 		setGridVelocity(getGridVelocity().x, -charge * multiplier);
 		charge = 0;
+		setSprite(AssetLoader.spriteSubmarine);
 		
 	}
 
@@ -158,6 +163,33 @@ public class Submarine extends Entity {
 	public void draw(GameRenderer renderer) {
 		
 		super.draw(renderer);
+		AssetLoader.spriteChargeMeter.drawAbsolute(0.0f, 0.0f, 0, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
+		Vector2 whiteRectangleDimensions = new Vector2(AssetLoader.spriteChargeMeter.getWidth(), AssetLoader.spriteChargeMeter.getHeight());
+		if (charge > superChargeThreshold) {
+			
+			whiteRectangleDimensions = new Vector2(AssetLoader.spriteChargeMeter.getWidth() * (superChargeThreshold / maxCharge), AssetLoader.spriteChargeMeter.getHeight());
+			Vector2 yellowRectangleDimensions = new Vector2(AssetLoader.spriteChargeMeter.getWidth() * ((charge - superChargeThreshold) / maxCharge), AssetLoader.spriteChargeMeter.getHeight());
+			Vector2 yellowPosition = new Vector2(getWorld().getCamPos(false).x + AssetLoader.spriteChargeMeter.getWidth() * (superChargeThreshold / maxCharge), getWorld().getCamPos(false).y);
+			drawRectangle(renderer, yellowPosition, yellowRectangleDimensions, AssetLoader.spriteRed);
+			
+		} else 
+			whiteRectangleDimensions = new Vector2(AssetLoader.spriteChargeMeter.getWidth() * (charge / maxCharge), AssetLoader.spriteChargeMeter.getHeight());
+		drawRectangle(renderer, getWorld().getCamPos(false), whiteRectangleDimensions, AssetLoader.spriteYellow);
+		
+	}
+	
+	private void drawRectangle(GameRenderer renderer, Vector2 position, Vector2 dimensions, Sprite sprite) {
+		
+		float x1 = position.x;
+		float y1 = position.y;
+		float x2 = position.x + dimensions.x;
+		float y2 = position.y;
+		float x3 = position.x;
+		float y3 = position.y + dimensions.y;
+		float x4 = position.x + dimensions.x;
+		float y4 = position.y + dimensions.y;
+		sprite.drawMonocolorTriangle(x1, y1, x2, y2, x3, y3, 1.0f, renderer);
+		sprite.drawMonocolorTriangle(x2, y2, x4, y4, x3, y3, 1.0f, renderer);
 		
 	}
 	
