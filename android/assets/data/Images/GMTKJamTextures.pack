@@ -12,28 +12,28 @@ background
   index: -1
 icon16
   rotate: false
-  xy: 996, 72
+  xy: 560, 146
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 icon32
   rotate: false
-  xy: 72, 132
+  xy: 522, 146
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 icon128
   rotate: false
-  xy: 948, 126
+  xy: 942, 72
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 red
   rotate: false
-  xy: 1018, 72
+  xy: 1012, 72
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -47,63 +47,63 @@ spr_air_meter
   index: -1
 spr_breakablewall
   rotate: false
-  xy: 2, 148
+  xy: 452, 148
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 spr_bubble
   rotate: false
-  xy: 846, 126
+  xy: 350, 110
   size: 96, 48
   orig: 96, 48
   offset: 0, 0
   index: -1
 spr_bubble_pop
   rotate: false
-  xy: 846, 72
+  xy: 200, 110
   size: 144, 48
   orig: 144, 48
   offset: 0, 0
   index: -1
 spr_charge_meter
   rotate: false
-  xy: 72, 110
+  xy: 522, 110
   size: 64, 16
   orig: 64, 16
   offset: 0, 0
   index: -1
 spr_enemyA
   rotate: false
-  xy: 212, 110
-  size: 48, 48
-  orig: 48, 48
+  xy: 648, 72
+  size: 288, 48
+  orig: 288, 48
   offset: 0, 0
   index: -1
 spr_mine
   rotate: false
-  xy: 142, 124
+  xy: 592, 110
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 spr_propulsion_bubble
   rotate: false
-  xy: 142, 110
+  xy: 522, 132
   size: 64, 8
   orig: 64, 8
   offset: 0, 0
   index: -1
 spr_sub
   rotate: false
-  xy: 40, 170
+  xy: 200, 164
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 spr_sub_attack_fire
   rotate: false
-  xy: 648, 72
+  xy: 2, 110
   size: 192, 64
   orig: 192, 64
   offset: 0, 0
@@ -117,28 +117,28 @@ spr_sub_charging
   index: -1
 spr_sub_hb
   rotate: false
-  xy: 2, 186
+  xy: 2, 180
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 ts_walls
   rotate: false
-  xy: 2, 110
+  xy: 452, 110
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 1018, 79
+  xy: 1019, 72
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 yellow
   rotate: false
-  xy: 1018, 86
+  xy: 1012, 79
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

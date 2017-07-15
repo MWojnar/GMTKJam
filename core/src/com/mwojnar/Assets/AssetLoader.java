@@ -151,7 +151,7 @@ public class AssetLoader {
 		
 		spriteSubmarine = new Sprite(submarineTexture, 1);
 		spriteSubmarineCharging = new Sprite(submarineChargingTexture, 20);
-		spriteEnemyA = new Sprite(enemyATexture, 1);
+		spriteEnemyA = new Sprite(enemyATexture, 6);
 		spriteBubble = new Sprite(bubbleTexture, 2);
 		spriteChargeMeter = new Sprite(chargeMeterTexture, 1);
 		spriteBubblePop = new Sprite(bubblePopTexture, 3);
