@@ -4,23 +4,19 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mwojnar.Assets.AssetLoader;
-import com.mwojnar.GameWorld.GMTKJamWorld;
 import com.playgon.GameEngine.Entity;
 import com.playgon.GameEngine.Mask;
 import com.playgon.GameEngine.TouchEvent;
 import com.playgon.GameWorld.GameWorld;
 
-public class Mine extends Entity {
-
-	private Vector2 startPos = null;
-	private float amplitude = 3.0f;
+public class CrumblyWall extends Entity {
 	
-	public Mine(GameWorld myWorld) {
+	public CrumblyWall(GameWorld myWorld) {
 		
 		super(myWorld);
-		setSprite(AssetLoader.spriteMine);
+		setSprite(AssetLoader.spriteCrumblyWall);
 		setPivot(getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f);
-		setMask(new Mask(this, new Vector2(getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f), 44.0f));
+		setMask(new Mask(this, getSprite().getWidth(), getSprite().getHeight()));
 		setDepth(40);
 		
 	}
@@ -30,11 +26,6 @@ public class Mine extends Entity {
 		
 		super.update(delta, touchEventList, charactersTyped, keysFirstDown, keysFirstUp, keysDown);
 		
-		if (startPos == null)
-			startPos = getPos(true).cpy();
-		
-		setPos(getPos(true).x, startPos.y + (float)Math.sin(((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() / 20.0f) * amplitude, true);
-
 		if (getPos(false).y > getWorld().getCamPos(false).y + getWorld().getGameDimensions().y)
 			destroy();
 		

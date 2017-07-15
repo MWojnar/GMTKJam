@@ -158,7 +158,7 @@ public class AssetLoader {
 		spriteAirMeter = new Sprite(airMeterTexture, 59);
 		spriteSubmarineAttackFire = new Sprite(submarineAttackFireTexture, 3);
 		spriteParticleBubble = new Sprite(particleBubbleTexture, 8);
-		spriteMine = new Sprite(mineTexture, 1);
+		spriteMine = new Sprite(mineTexture, 12);
 		spriteCrumblyWall = new Sprite(crumblyWallTexture, 1);
 		
 		spriteWall = new Sprite(wallTexture, 1);

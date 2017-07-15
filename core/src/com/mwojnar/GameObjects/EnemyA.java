@@ -53,6 +53,9 @@ public class EnemyA extends Entity {
 		
 		setPos(getPos(true).x, startPos.y + (float)Math.sin(((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() / 20.0f) * amplitude, true);
 		
+		if (getPos(false).y > getWorld().getCamPos(false).y + getWorld().getGameDimensions().y)
+			destroy();
+		
 	}
 	
 	@Override
