@@ -1,0 +1,26 @@
+GMTKJamTextures.png
+size: 128, 128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+spr_bubble
+  rotate: false
+  xy: 2, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+spr_enemyA
+  rotate: false
+  xy: 2, 56
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+spr_sub
+  rotate: false
+  xy: 56, 2
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
