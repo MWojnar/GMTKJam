@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.playgon.GameEngine.Entity;
 import com.playgon.GameEngine.TouchEvent;
+import com.playgon.GameWorld.GameRenderer;
 import com.playgon.GameWorld.GameWorld;
 
 public class Submarine extends Entity {
