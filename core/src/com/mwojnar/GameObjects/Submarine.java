@@ -287,7 +287,7 @@ public class Submarine extends Entity {
 	@Override
 	public void draw(GameRenderer renderer) {
 		
-		super.draw(renderer);
+		getSprite().draw(getPos(false).x, getPos(false).y, getFrame(), getScale(), getScale(), PlaygonMath.toRadians(getGridVelocity().x * 40.0f), getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f, renderer);
 		
 		int frame = (int)(59.0f - (59.0f * air / maxAir));
 		if (frame > 58)
