@@ -106,6 +106,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
 		compile name: 'PlaygonEngine'
 		compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+		compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1'
     }
 }
 
