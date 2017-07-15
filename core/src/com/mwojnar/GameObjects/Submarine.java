@@ -19,6 +19,7 @@ import com.playgon.GameEngine.Sprite;
 import com.playgon.GameEngine.TouchEvent;
 import com.playgon.GameWorld.GameRenderer;
 import com.playgon.GameWorld.GameWorld;
+import com.playgon.Utils.PlaygonMath;
 
 public class Submarine extends Entity {
 	
@@ -26,10 +27,11 @@ public class Submarine extends Entity {
 				  chargeMultiplier, superChargeMultiplier, superChargeThreshold, maxCharge,
 				  boostDeceleration, verticalDeceleration, airLossRate, airLossFromEnemy, airGainRate,
 				  maxAir, minVerticalSpeed, maxVerticalSpeed, chargeCooldownMultiplier,
-				  superChargeCooldownAddition, minChargeSpeed;
-	private float charge = 0.0f, air = 0.0f;
-	private int cooldownLeft = 0;
-	private boolean superCooldown = false;
+				  superChargeCooldownAddition, minChargeSpeed, bubbleChargeSpeed, bubbleAddSpeed;
+	private float charge = 0.0f, air = 0.0f, currentMaxVerticalSpeed = 0.0f;
+	private int cooldownLeft = 0, bubbleTweenFrames = 0, startBubbleTweenFrames = 10;
+	private boolean superCooldown = false, bubbleMaxSpeed = false;
+	private Bubble stickBubble = null;
 	private ChargeMode chargeMode = ChargeMode.IDLE;
 	
 	private enum ChargeMode { IDLE, CHARGING, UNCHARGING }
@@ -70,12 +72,15 @@ public class Submarine extends Entity {
 			chargeCooldownMultiplier = Float.parseFloat((String)jsonObject.get("Charge cooldown multiplier"));
 			superChargeCooldownAddition = Float.parseFloat((String)jsonObject.get("Super Charge cooldown add"));
 			minChargeSpeed = Float.parseFloat((String)jsonObject.get("Minimum speed a charge sends you upward"));
+			bubbleChargeSpeed = Float.parseFloat((String)jsonObject.get("Charge Speed in bubble"));
+			bubbleAddSpeed = Float.parseFloat((String)jsonObject.get("Bubble add speed"));
 			
 			air = maxAir;
+			currentMaxVerticalSpeed = maxVerticalSpeed;
 			
 		} catch (Exception e) {
 			
-			chargeSpeed = 0.1f;
+			chargeSpeed = 0.5f;
 			horizontalMaxSpeed = 8.0f;
 			horizontalAcceleration = 0.5f;
 			horizontalDeceleration = 0.25f;
@@ -91,11 +96,14 @@ public class Submarine extends Entity {
 			maxAir = 10.0f;
 			minVerticalSpeed = 0.1f;
 			maxVerticalSpeed = 20.0f;
-			chargeCooldownMultiplier = 2.0f;
+			chargeCooldownMultiplier = 0.3f;
 			superChargeCooldownAddition = 60.0f;
 			minChargeSpeed = 2.0f;
+			bubbleChargeSpeed = 0.5f;
+			bubbleAddSpeed = 20.0f;
 			
 			air = maxAir;
+			currentMaxVerticalSpeed = maxVerticalSpeed;
 
 			e.printStackTrace();
 			
@@ -111,7 +119,13 @@ public class Submarine extends Entity {
 		cooldownLeft--;
 		if (cooldownLeft < 0)
 			cooldownLeft = 0;
-		air -= airLossRate;
+		bubbleTweenFrames--;
+		if (bubbleTweenFrames < 0)
+			bubbleTweenFrames = 0;
+		if (stickBubble == null)
+			air -= airLossRate;
+		else
+			air += airGainRate;
 		if (air <= 0)
 			die();
 		boolean boosting = false;
@@ -119,7 +133,10 @@ public class Submarine extends Entity {
 			boosting = true;
 		if (boosting) {
 			
-			charge += chargeSpeed;
+			if (stickBubble == null)
+				charge += chargeSpeed;
+			else
+				charge += bubbleChargeSpeed;
 			setGridVelocity(getGridVelocity().x, getGridVelocity().y + boostDeceleration);
 			chargeMode = ChargeMode.CHARGING;
 			
@@ -144,13 +161,67 @@ public class Submarine extends Entity {
 			setGridVelocity(newHorizontalSpeed, getGridVelocity().y);
 			
 		}
+		if (bubbleMaxSpeed && Math.abs(getGridVelocity().y) <= maxVerticalSpeed) {
+			
+			currentMaxVerticalSpeed = maxVerticalSpeed;
+			bubbleMaxSpeed = false;
+			
+		}
 		if (Math.abs(getGridVelocity().y) < minVerticalSpeed || getGridVelocity().y > 0.0f)
 			setGridVelocity(getGridVelocity().x, -minVerticalSpeed);
-		if (Math.abs(getGridVelocity().y) > maxVerticalSpeed)
-			setGridVelocity(getGridVelocity().x, -maxVerticalSpeed);
+		if (Math.abs(getGridVelocity().y) > currentMaxVerticalSpeed)
+			setGridVelocity(getGridVelocity().x, -currentMaxVerticalSpeed);
 		if (Math.abs(getGridVelocity().x) > horizontalMaxSpeed)
 			setGridVelocity(horizontalMaxSpeed * Math.signum(getGridVelocity().x), getGridVelocity().y);
 		moveByVelocity();
+		if (stickBubble != null) {
+			
+			setGridVelocity(getGridVelocity().x, getGridVelocity().y + boostDeceleration);
+			if (bubbleTweenFrames <= 0)
+				setPos(stickBubble.getPos(true), true);
+			else
+				tweenBubble();
+			
+		}
+		handleCollisions();
+		handleChargeFrames();
+		
+	}
+	
+	private void tweenBubble() {
+		
+		float distanceToCenterOfBubble = PlaygonMath.distance(getPos(true), stickBubble.getPos(true));
+		float directionToCenterOfBubble = PlaygonMath.direction(getPos(true), stickBubble.getPos(true));
+		float moveDistance = distanceToCenterOfBubble / bubbleTweenFrames;
+		movePos(PlaygonMath.getGridVector(moveDistance, directionToCenterOfBubble));
+		
+	}
+
+	private void handleCollisions() {
+		
+		for (Entity entity : getWorld().getEntityList()) {
+			
+			if (collisionsWith(entity).size() > 0) {
+				
+				if (entity instanceof Bubble) {
+					
+					if (entity.getSprite() != AssetLoader.spriteBubblePop && stickBubble == null) {
+						
+						stickBubble = (Bubble)entity;
+						bubbleTweenFrames = startBubbleTweenFrames;
+						
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+	}
+
+	private void handleChargeFrames() {
+		
 		switch (chargeMode) {
 		
 		case IDLE: setSprite(AssetLoader.spriteSubmarine); break;
@@ -173,7 +244,7 @@ public class Submarine extends Entity {
 		}
 		
 	}
-	
+
 	private void die() {
 		// TODO Auto-generated method stub
 		
@@ -191,7 +262,17 @@ public class Submarine extends Entity {
 			superCooldown = true;
 			
 		}
-		setGridVelocity(getGridVelocity().x, -charge * multiplier + minChargeSpeed);
+		float boostSpeed = -charge * multiplier - minChargeSpeed;
+		if (stickBubble != null) {
+			
+			stickBubble.pop();
+			currentMaxVerticalSpeed = maxVerticalSpeed + bubbleAddSpeed;
+			bubbleMaxSpeed = true;
+			boostSpeed -= bubbleAddSpeed;
+			
+		}
+		stickBubble = null;
+		setGridVelocity(getGridVelocity().x, boostSpeed);
 		charge = 0;
 		setSprite(AssetLoader.spriteSubmarine);
 		

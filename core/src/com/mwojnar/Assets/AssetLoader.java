@@ -34,10 +34,10 @@ public class AssetLoader {
 	private static TextureAtlas atlas;
 	public static Texture wojworksTexture;
 	public static TextureRegion submarineTexture, enemyATexture, bubbleTexture, wallTexture, backgroundTexture,
-								chargeMeterTexture, submarineChargingTexture;
+								chargeMeterTexture, submarineChargingTexture, bubblePopTexture;
 	public static TextureRegion whiteTexture, yellowTexture, redTexture;
 	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall, spriteChargeMeter,
-						 spriteSubmarineCharging;
+						 spriteSubmarineCharging, spriteBubblePop;
 	public static Sprite spriteWhite, spriteYellow, spriteRed;
 	public static BackgroundTemplate background;
 	public static MusicTemplate mainMusic;
@@ -130,6 +130,7 @@ public class AssetLoader {
 		bubbleTexture = atlas.findRegion("spr_bubble");
 		chargeMeterTexture = atlas.findRegion("spr_charge_meter");
 		wallTexture = atlas.findRegion("ts_walls");
+		bubblePopTexture = atlas.findRegion("spr_bubble_pop");
 		
 		backgroundTexture = atlas.findRegion("background");
 		
@@ -144,8 +145,9 @@ public class AssetLoader {
 		spriteSubmarine = new Sprite(submarineTexture, 1);
 		spriteSubmarineCharging = new Sprite(submarineChargingTexture, 20);
 		spriteEnemyA = new Sprite(enemyATexture, 1);
-		spriteBubble = new Sprite(bubbleTexture, 1);
+		spriteBubble = new Sprite(bubbleTexture, 2);
 		spriteChargeMeter = new Sprite(chargeMeterTexture, 1);
+		spriteBubblePop = new Sprite(bubblePopTexture, 3);
 		
 		spriteWall = new Sprite(wallTexture, 1);
 		

@@ -5,63 +5,84 @@ filter: Nearest,Nearest
 repeat: none
 background
   rotate: false
-  xy: 648, 2
+  xy: 900, 2
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 icon16
   rotate: false
-  xy: 950, 56
+  xy: 180, 62
   size: 16, 16
   orig: 16, 16
   offset: 0, 0
   index: -1
 icon32
   rotate: false
-  xy: 982, 2
+  xy: 212, 40
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 icon128
   rotate: false
-  xy: 718, 2
+  xy: 2, 40
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 red
   rotate: false
-  xy: 1020, 2
+  xy: 202, 62
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
+spr_breakablewall
+  rotate: false
+  xy: 142, 62
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
 spr_bubble
   rotate: false
-  xy: 928, 2
-  size: 48, 48
-  orig: 48, 48
+  xy: 798, 2
+  size: 96, 48
+  orig: 96, 48
+  offset: 0, 0
+  index: -1
+spr_bubble_pop
+  rotate: false
+  xy: 648, 2
+  size: 144, 48
+  orig: 144, 48
   offset: 0, 0
   index: -1
 spr_charge_meter
   rotate: false
-  xy: 858, 2
+  xy: 142, 40
   size: 64, 16
   orig: 64, 16
   offset: 0, 0
   index: -1
 spr_enemyA
   rotate: false
-  xy: 858, 24
+  xy: 970, 2
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+spr_mine
+  rotate: false
+  xy: 970, 56
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 spr_sub
   rotate: false
-  xy: 982, 40
+  xy: 72, 78
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -75,28 +96,28 @@ spr_sub_charging
   index: -1
 spr_sub_hb
   rotate: false
-  xy: 912, 56
+  xy: 2, 110
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 ts_walls
   rotate: false
-  xy: 788, 2
+  xy: 72, 40
   size: 64, 32
   orig: 64, 32
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 1020, 9
+  xy: 202, 69
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 yellow
   rotate: false
-  xy: 1020, 16
+  xy: 202, 76
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

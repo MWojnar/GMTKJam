@@ -15,6 +15,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mwojnar.Game.GMTKJamGame;
+import com.mwojnar.GameObjects.Bubble;
 import com.mwojnar.GameObjects.Submarine;
 import com.mwojnar.GameWorld.GMTKJamWorld.Mode;
 import com.mwojnar.Assets.AssetLoader;
@@ -29,12 +30,13 @@ import com.playgon.Utils.LoadingThread;
 import com.playgon.Utils.Pair;
 
 public class GMTKJamWorld extends GameWorld {
-
+	
 	public enum Mode { MENU, GAME, HIGHSCORE }
 	
 	private Mode mode = Mode.GAME;
 	private LoadingThread loadingThread = null;
 	private boolean showFPS = true, paused = false;
+	private float nextSpawnPos = 0.0f;
 	private long framesSinceLevelCreation = 0;
 	private FileHandle levelToLoad = null;
 	private Random rand = new Random();
@@ -168,6 +170,12 @@ public class GMTKJamWorld extends GameWorld {
 			if (mode == Mode.GAME) {
 				
 				setCamPos(new Vector2(getCamPos(true).x, submarine.getPos(false).y - 200.0f - submarine.getGridVelocity().y * 2.0f));
+				if (getCamPos(false).y < nextSpawnPos) {
+					
+					spawnObstacles();
+					nextSpawnPos -= getGameDimensions().y;
+					
+				}
 				
 			}
 			
@@ -180,6 +188,14 @@ public class GMTKJamWorld extends GameWorld {
 		
 	}
 	
+	private void spawnObstacles() {
+		
+		Bubble bubble = new Bubble(this);
+		bubble.setPos(rand.nextFloat() * (getGameDimensions().x - 100.0f) + 50.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
+		createEntity(bubble);
+		
+	}
+
 	public boolean isPaused() {
 		
 		return paused;
