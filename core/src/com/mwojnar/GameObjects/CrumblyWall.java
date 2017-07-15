@@ -9,7 +9,7 @@ import com.playgon.GameEngine.Mask;
 import com.playgon.GameEngine.TouchEvent;
 import com.playgon.GameWorld.GameWorld;
 
-public class CrumblyWall extends Entity {
+public class CrumblyWall extends Enemy {
 	
 	public CrumblyWall(GameWorld myWorld) {
 		

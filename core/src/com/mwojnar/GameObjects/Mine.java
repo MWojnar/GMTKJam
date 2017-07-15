@@ -10,7 +10,7 @@ import com.playgon.GameEngine.Mask;
 import com.playgon.GameEngine.TouchEvent;
 import com.playgon.GameWorld.GameWorld;
 
-public class Mine extends Entity {
+public class Mine extends Enemy {
 
 	private Vector2 startPos = null;
 	private float amplitude = 3.0f;

@@ -104,7 +104,7 @@ public class GMTKJamWorld extends GameWorld {
 
 		mainBackground = new Background(AssetLoader.background);
 		mainBackground.setTilingY(true);
-		mainBackground.setParallax(new Vector2(1.0f, 0.0f));
+		mainBackground.setParallax(new Vector2(1.0f, 0.05f));
 		addBackground(mainBackground);
 		Background parallaxWall2 = new Background(AssetLoader.parallaxWall2);
 		parallaxWall2.setTilingY(true);

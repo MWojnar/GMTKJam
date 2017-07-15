@@ -12,7 +12,7 @@ import com.playgon.GameEngine.TouchEvent;
 import com.playgon.GameWorld.GameRenderer;
 import com.playgon.GameWorld.GameWorld;
 
-public class EnemyA extends Entity {
+public class EnemyA extends Enemy {
 	
 	private boolean isLeft = false;
 	private Vector2 startPos = null;
