@@ -9,7 +9,7 @@ import com.mwojnar.Game.GMTKJamGame;
 public class DesktopLauncher {
     public static void main (String[] arg) {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.title = "Reaper Rampage";
+        config.title = "Aqua Ascent";
         config.height = 640;
         config.width = 400;
         config.addIcon("data/Images/icon128.png", FileType.Internal);
