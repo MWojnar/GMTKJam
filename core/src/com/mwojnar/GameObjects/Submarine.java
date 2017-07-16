@@ -275,6 +275,7 @@ public class Submarine extends Entity {
 						else {
 							
 							recoil(entity.getPos(true));
+							bubbleTimer = 0;
 							if (!(entity instanceof CrumblyWall)) {
 								
 								invincibilityTimer = invincibilityTimerMax;
