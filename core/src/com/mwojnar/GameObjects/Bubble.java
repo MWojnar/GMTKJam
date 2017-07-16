@@ -30,6 +30,10 @@ public class Bubble extends Entity {
 		movePos(0.0f, -0.2f);
 		if (getPos(false).y > getWorld().getCamPos(false).y + getWorld().getGameDimensions().y)
 			destroy();
+		for (Entity entity : getWorld().getEntityList())
+			if (!(entity instanceof Bubble || entity instanceof Submarine))
+				if (collisionsWith(entity).size() > 0)
+					pop();
 		
 	}
 	

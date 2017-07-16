@@ -32,7 +32,8 @@ public class Submarine extends Entity {
 				  superBoostAttackDuration;
 	private float charge = 0.0f, air = 0.0f, currentMaxVerticalSpeed = 0.0f;
 	private int cooldownLeft = 0, bubbleTweenFrames = 0, startBubbleTweenFrames = 10, superBoostCooldown = 0,
-			invincibilityTimer = 0, invincibilityTimerMax = 90, recoilTimer = 0, recoilTimerMax = 30;
+			invincibilityTimer = 0, invincibilityTimerMax = 90, recoilTimer = 0, recoilTimerMax = 30,
+			bubbleTimer = 0;
 	private boolean superCooldown = false, bubbleMaxSpeed = false;
 	private Bubble stickBubble = null;
 	private ChargeMode chargeMode = ChargeMode.IDLE;
@@ -133,6 +134,9 @@ public class Submarine extends Entity {
 		invincibilityTimer--;
 		if (invincibilityTimer < 0)
 			invincibilityTimer = 0;
+		bubbleTimer--;
+		if (bubbleTimer < 0)
+			bubbleTimer = 0;
 		recoilTimer--;
 		if (recoilTimer < 0)
 			recoilTimer = 0;
@@ -217,7 +221,7 @@ public class Submarine extends Entity {
 		}
 		handleCollisions();
 		handleChargeFrames();
-		if (superBoostCooldown > 0)
+		if (bubbleTimer > 0)
 			tryCreateBubble();
 		
 	}
@@ -327,12 +331,14 @@ public class Submarine extends Entity {
 		superCooldown = false;
 		cooldownLeft = (int)(charge * chargeCooldownMultiplier);
 		float multiplier = chargeMultiplier;
+		bubbleTimer = (int)(superBoostAttackDuration * charge / maxCharge);
 		if (charge >= superChargeThreshold) {
 			
 			multiplier += superChargeMultiplier;
 			cooldownLeft += superChargeCooldownAddition;
 			superCooldown = true;
 			superBoostCooldown = (int)superBoostAttackDuration;
+			bubbleTimer = (int)superBoostAttackDuration;
 			
 		}
 		float boostSpeed = -charge * multiplier - minChargeSpeed;
