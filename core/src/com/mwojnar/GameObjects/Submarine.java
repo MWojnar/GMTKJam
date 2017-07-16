@@ -34,7 +34,7 @@ public class Submarine extends Entity {
 	private int cooldownLeft = 0, bubbleTweenFrames = 0, startBubbleTweenFrames = 10, superBoostCooldown = 0,
 			invincibilityTimer = 0, invincibilityTimerMax = 90, recoilTimer = 0, recoilTimerMax = 30,
 			bubbleTimer = 0;
-	private boolean superCooldown = false, bubbleMaxSpeed = false;
+	private boolean superCooldown = false, bubbleMaxSpeed = false, dead = false;
 	private Bubble stickBubble = null;
 	private ChargeMode chargeMode = ChargeMode.IDLE;
 	
@@ -122,107 +122,113 @@ public class Submarine extends Entity {
 		
 		super.update(delta, touchEventList, charactersTyped, keysFirstDown, keysFirstUp, keysDown);
 		
-		cooldownLeft--;
-		if (cooldownLeft < 0)
-			cooldownLeft = 0;
-		superBoostCooldown--;
-		if (superBoostCooldown < 0)
-			superBoostCooldown = 0;
-		bubbleTweenFrames--;
-		if (bubbleTweenFrames < 0)
-			bubbleTweenFrames = 0;
-		invincibilityTimer--;
-		if (invincibilityTimer < 0)
-			invincibilityTimer = 0;
-		bubbleTimer--;
-		if (bubbleTimer < 0)
-			bubbleTimer = 0;
-		recoilTimer--;
-		if (recoilTimer < 0)
-			recoilTimer = 0;
-		if (stickBubble == null)
-			air -= airLossRate;
-		else
-			air += airGainRate;
-		if (air <= 0) {
+		if (!dead) {
 			
-			die();
-			air = 0;
-			
-		}
-		if (air > maxAir)
-			air = maxAir;
-		boolean boosting = false;
-		if (keysDown.contains(com.badlogic.gdx.Input.Keys.SPACE) && cooldownLeft <= 0)
-			boosting = true;
-		if (boosting) {
-			
+			cooldownLeft--;
+			if (cooldownLeft < 0)
+				cooldownLeft = 0;
+			superBoostCooldown--;
+			if (superBoostCooldown < 0)
+				superBoostCooldown = 0;
+			bubbleTweenFrames--;
+			if (bubbleTweenFrames < 0)
+				bubbleTweenFrames = 0;
+			invincibilityTimer--;
+			if (invincibilityTimer < 0)
+				invincibilityTimer = 0;
+			bubbleTimer--;
+			if (bubbleTimer < 0)
+				bubbleTimer = 0;
+			recoilTimer--;
+			if (recoilTimer < 0)
+				recoilTimer = 0;
 			if (stickBubble == null)
-				charge += chargeSpeed;
+				air -= airLossRate;
 			else
-				charge += bubbleChargeSpeed;
-			if (recoilTimer <= 0)
-				setGridVelocity(getGridVelocity().x, getGridVelocity().y + boostDeceleration);
-			chargeMode = ChargeMode.CHARGING;
-			
-		} else if (recoilTimer <= 0)
-			setGridVelocity(getGridVelocity().x, getGridVelocity().y + verticalDeceleration);
-		if (charge > maxCharge || (charge > 0 && !keysDown.contains(com.badlogic.gdx.Input.Keys.SPACE)))
-			burst();
-		if (cooldownLeft > 0)
-			chargeMode = ChargeMode.UNCHARGING;
-		else if (!boosting)
-			chargeMode = ChargeMode.IDLE;
-		if (recoilTimer <= 0) {
-			
-			if (keysDown.contains(com.badlogic.gdx.Input.Keys.LEFT))
-				setGridVelocity(getGridVelocity().x - horizontalAcceleration, getGridVelocity().y);
-			else if (keysDown.contains(com.badlogic.gdx.Input.Keys.RIGHT))
-				setGridVelocity(getGridVelocity().x + horizontalAcceleration, getGridVelocity().y);
-			else {
+				air += airGainRate;
+			if (air <= 0) {
 				
-				float decelerationMultiple = -Math.signum(getGridVelocity().x);
-				float newHorizontalSpeed = getGridVelocity().x + decelerationMultiple * horizontalDeceleration;
-				if (-Math.signum(newHorizontalSpeed) != decelerationMultiple)
-					newHorizontalSpeed = 0;
-				setGridVelocity(newHorizontalSpeed, getGridVelocity().y);
+				die();
+				air = 0;
 				
 			}
+			if (air > maxAir)
+				air = maxAir;
+			boolean boosting = false;
+			if (keysDown.contains(com.badlogic.gdx.Input.Keys.SPACE) && cooldownLeft <= 0)
+				boosting = true;
+			if (boosting) {
+				
+				if (stickBubble == null)
+					charge += chargeSpeed;
+				else
+					charge += bubbleChargeSpeed;
+				if (recoilTimer <= 0)
+					setGridVelocity(getGridVelocity().x, getGridVelocity().y + boostDeceleration);
+				chargeMode = ChargeMode.CHARGING;
+				
+			} else if (recoilTimer <= 0)
+				setGridVelocity(getGridVelocity().x, getGridVelocity().y + verticalDeceleration);
+			if (charge > maxCharge || (charge > 0 && !keysDown.contains(com.badlogic.gdx.Input.Keys.SPACE)))
+				burst();
+			if (cooldownLeft > 0)
+				chargeMode = ChargeMode.UNCHARGING;
+			else if (!boosting)
+				chargeMode = ChargeMode.IDLE;
+			if (recoilTimer <= 0) {
+				
+				if (keysDown.contains(com.badlogic.gdx.Input.Keys.LEFT))
+					setGridVelocity(getGridVelocity().x - horizontalAcceleration, getGridVelocity().y);
+				else if (keysDown.contains(com.badlogic.gdx.Input.Keys.RIGHT))
+					setGridVelocity(getGridVelocity().x + horizontalAcceleration, getGridVelocity().y);
+				else {
+					
+					float decelerationMultiple = -Math.signum(getGridVelocity().x);
+					float newHorizontalSpeed = getGridVelocity().x + decelerationMultiple * horizontalDeceleration;
+					if (-Math.signum(newHorizontalSpeed) != decelerationMultiple)
+						newHorizontalSpeed = 0;
+					setGridVelocity(newHorizontalSpeed, getGridVelocity().y);
+					
+				}
+				
+			}
+			if (bubbleMaxSpeed && Math.abs(getGridVelocity().y) <= maxVerticalSpeed) {
+				
+				currentMaxVerticalSpeed = maxVerticalSpeed;
+				bubbleMaxSpeed = false;
+				
+			}
+			if ((Math.abs(getGridVelocity().y) < minVerticalSpeed || getGridVelocity().y > 0.0f) && recoilTimer <= 0)
+				setGridVelocity(getGridVelocity().x, -minVerticalSpeed);
+			if (Math.abs(getGridVelocity().y) > currentMaxVerticalSpeed)
+				setGridVelocity(getGridVelocity().x, -currentMaxVerticalSpeed);
+			if (Math.abs(getGridVelocity().x) > horizontalMaxSpeed)
+				setGridVelocity(horizontalMaxSpeed * Math.signum(getGridVelocity().x), getGridVelocity().y);
+			moveByVelocity();
+			if (getPos(false).x < 40.0f)
+				setPos(40.0f, getPos(false).y, false);
+			else if (getPos(false).x + getSprite().getWidth() > getWorld().getGameDimensions().x - 40.0f)
+				setPos(getWorld().getGameDimensions().x - 40.0f - getSprite().getWidth(), getPos(false).y, false);
+			if (stickBubble != null) {
+				
+				setGridVelocity(getGridVelocity().x, getGridVelocity().y + boostDeceleration);
+				if (bubbleTweenFrames <= 0)
+					setPos(stickBubble.getPos(true), true);
+				else
+					tweenBubble();
+				
+				if (stickBubble.getSprite() == AssetLoader.spriteBubblePop)
+					stickBubble = null;
+				
+			}
+			handleCollisions();
+			handleChargeFrames();
+			if (bubbleTimer > 0)
+				tryCreateBubble();
+			if (getPos(true).y >= ((GMTKJamWorld)getWorld()).getMonster().getPos(true).y)
+				die();
 			
 		}
-		if (bubbleMaxSpeed && Math.abs(getGridVelocity().y) <= maxVerticalSpeed) {
-			
-			currentMaxVerticalSpeed = maxVerticalSpeed;
-			bubbleMaxSpeed = false;
-			
-		}
-		if ((Math.abs(getGridVelocity().y) < minVerticalSpeed || getGridVelocity().y > 0.0f) && recoilTimer <= 0)
-			setGridVelocity(getGridVelocity().x, -minVerticalSpeed);
-		if (Math.abs(getGridVelocity().y) > currentMaxVerticalSpeed)
-			setGridVelocity(getGridVelocity().x, -currentMaxVerticalSpeed);
-		if (Math.abs(getGridVelocity().x) > horizontalMaxSpeed)
-			setGridVelocity(horizontalMaxSpeed * Math.signum(getGridVelocity().x), getGridVelocity().y);
-		moveByVelocity();
-		if (getPos(false).x < 40.0f)
-			setPos(40.0f, getPos(false).y, false);
-		else if (getPos(false).x + getSprite().getWidth() > getWorld().getGameDimensions().x - 40.0f)
-			setPos(getWorld().getGameDimensions().x - 40.0f - getSprite().getWidth(), getPos(false).y, false);
-		if (stickBubble != null) {
-			
-			setGridVelocity(getGridVelocity().x, getGridVelocity().y + boostDeceleration);
-			if (bubbleTweenFrames <= 0)
-				setPos(stickBubble.getPos(true), true);
-			else
-				tweenBubble();
-			
-			if (stickBubble.getSprite() == AssetLoader.spriteBubblePop)
-				stickBubble = null;
-			
-		}
-		handleCollisions();
-		handleChargeFrames();
-		if (bubbleTimer > 0)
-			tryCreateBubble();
 		
 	}
 	
@@ -263,6 +269,7 @@ public class Submarine extends Entity {
 						stickBubble = (Bubble)entity;
 						bubbleTweenFrames = startBubbleTweenFrames;
 						superBoostCooldown = 0;
+						bubbleTimer = 0;
 						
 					}
 					
@@ -323,12 +330,16 @@ public class Submarine extends Entity {
 	}
 
 	private void die() {
-		// TODO Auto-generated method stub
+		
+		dead = true;
+		setGridVelocity(0.0f, 0.0f);
+		air = 0.0f;
 		
 	}
 
 	private void burst() {
 		
+		((GMTKJamWorld)getWorld()).setStarted(true);
 		superCooldown = false;
 		cooldownLeft = (int)(charge * chargeCooldownMultiplier);
 		float multiplier = chargeMultiplier;
@@ -376,12 +387,6 @@ public class Submarine extends Entity {
 			
 		}
 		
-		int frame = (int)(59.0f - (59.0f * air / maxAir));
-		if (frame > 58)
-			frame = 58;
-		if (frame < 0)
-			frame = 0;
-		AssetLoader.spriteAirMeter.drawAbsolute(2.0f, getWorld().getGameDimensions().y - AssetLoader.spriteAirMeter.getHeight() - 2.0f, frame, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
 		/*AssetLoader.spriteChargeMeter.drawAbsolute(0.0f, 0.0f, 0, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
 		Vector2 whiteRectangleDimensions = new Vector2(AssetLoader.spriteChargeMeter.getWidth(), AssetLoader.spriteChargeMeter.getHeight());
 		if (charge > superChargeThreshold) {
@@ -394,6 +399,20 @@ public class Submarine extends Entity {
 		} else 
 			whiteRectangleDimensions = new Vector2(AssetLoader.spriteChargeMeter.getWidth() * (charge / maxCharge), AssetLoader.spriteChargeMeter.getHeight());
 		drawRectangle(renderer, getWorld().getCamPos(false), whiteRectangleDimensions, AssetLoader.spriteYellow);*/
+		
+	}
+	
+	private void drawDistanceHud(GameRenderer renderer) {
+		
+		float distance = PlaygonMath.distance(getPos(true), ((GMTKJamWorld)getWorld()).getMonster().getPos(true));
+		float x1 = getWorld().getGameDimensions().x - 2.0f - AssetLoader.spriteDistanceHud.getWidth() / 2.0f;
+		float y1 = getWorld().getGameDimensions().y - 2.0f - AssetLoader.spriteDistanceHud.getHeight() / 2.0f;
+		float x2 = x1;
+		float y2 = y1 - distance / 10.0f;
+		
+		AssetLoader.spriteWhite.drawMonocolorLine(getWorld().getCamPos(false).x + x1, getWorld().getCamPos(false).y + y1, getWorld().getCamPos(false).x + x2, getWorld().getCamPos(false).y + y2, 2.0f, 1.0f, renderer);
+		AssetLoader.spriteDistanceHud.drawAbsolute(x1 - AssetLoader.spriteDistanceHud.getWidth() / 2.0f, y1 - AssetLoader.spriteDistanceHud.getHeight() / 2.0f, 0, 1.0f, 1.0f, 0.0f, AssetLoader.spriteDistanceHud.getWidth() / 2.0f, AssetLoader.spriteDistanceHud.getHeight() / 2.0f, renderer);
+		AssetLoader.spriteDistanceHud.drawAbsolute(x2 - AssetLoader.spriteDistanceHud.getWidth() / 2.0f, y2 - AssetLoader.spriteDistanceHud.getHeight() / 2.0f, 1, 1.0f, 1.0f, 0.0f, AssetLoader.spriteDistanceHud.getWidth() / 2.0f, AssetLoader.spriteDistanceHud.getHeight() / 2.0f, renderer);
 		
 	}
 	
@@ -416,6 +435,18 @@ public class Submarine extends Entity {
 		
 		recoilTimer = recoilTimerMax;
 		setRadialVelocity(0.5f, PlaygonMath.direction(recoilPoint, getPos(true)));
+		
+	}
+	
+	public float getAir() {
+		
+		return air;
+		
+	}
+
+	public float getMaxAir() {
+		
+		return maxAir;
 		
 	}
 	

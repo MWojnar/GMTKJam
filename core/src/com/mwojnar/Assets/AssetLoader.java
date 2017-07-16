@@ -37,13 +37,13 @@ public class AssetLoader {
 								chargeMeterTexture, submarineChargingTexture, bubblePopTexture, airMeterTexture,
 								submarineAttackFireTexture, particleBubbleTexture, mineTexture, crumblyWallTexture,
 								backWallTexture, parallaxWall1Texture, parallaxWall2Texture, enemyAParticleTexture,
-								mineParticleTexture, crumblyWallParticleTexture;
-	public static TextureRegion whiteTexture, yellowTexture, redTexture;
+								mineParticleTexture, crumblyWallParticleTexture, monsterTexture, distanceHudTexture;
+	public static TextureRegion whiteTexture, yellowTexture, redTexture, blackTexture;
 	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall, spriteChargeMeter,
 						 spriteSubmarineCharging, spriteBubblePop, spriteAirMeter, spriteSubmarineAttackFire,
 						 spriteParticleBubble, spriteMine, spriteCrumblyWall, spriteEnemyAParticle, spriteMineParticle,
-						 spriteCrumblyWallParticle;
-	public static Sprite spriteWhite, spriteYellow, spriteRed;
+						 spriteCrumblyWallParticle, spriteMonster, spriteDistanceHud;
+	public static Sprite spriteWhite, spriteYellow, spriteRed, spriteBlack;
 	public static BackgroundTemplate background, backWall, parallaxWall1, parallaxWall2;
 	public static MusicTemplate mainMusic;
 	public static MusicHandler musicHandler;
@@ -144,6 +144,8 @@ public class AssetLoader {
 		enemyAParticleTexture = atlas.findRegion("spr_enemyA_particles");
 		mineParticleTexture = atlas.findRegion("spr_mine_particles");
 		crumblyWallParticleTexture = atlas.findRegion("spr_breakablewall_particles");
+		monsterTexture = atlas.findRegion("spr_monster");
+		distanceHudTexture = atlas.findRegion("spr_distance_HUD");
 		
 		backgroundTexture = atlas.findRegion("background");
 		backWallTexture = atlas.findRegion("ts_walls");
@@ -153,6 +155,7 @@ public class AssetLoader {
 		whiteTexture = atlas.findRegion("white");
 		yellowTexture = atlas.findRegion("yellow");
 		redTexture = atlas.findRegion("red");
+		blackTexture = atlas.findRegion("black");
 		
 	}
 	
@@ -172,6 +175,8 @@ public class AssetLoader {
 		spriteEnemyAParticle = new Sprite(enemyAParticleTexture, 4);
 		spriteMineParticle = new Sprite(mineParticleTexture, 4);
 		spriteCrumblyWallParticle = new Sprite(crumblyWallParticleTexture, 4);
+		spriteMonster = new Sprite(monsterTexture, 1);
+		spriteDistanceHud = new Sprite(distanceHudTexture, 2);
 		
 		spriteWall = new Sprite(wallTexture, 1);
 		
@@ -183,6 +188,7 @@ public class AssetLoader {
 		spriteWhite = new Sprite(whiteTexture, 1);
 		spriteYellow = new Sprite(yellowTexture, 1);
 		spriteRed = new Sprite(redTexture, 1);
+		spriteBlack = new Sprite(blackTexture, 1);
 		
 	}
 	

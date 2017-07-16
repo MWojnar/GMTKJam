@@ -18,7 +18,9 @@ import com.mwojnar.Game.GMTKJamGame;
 import com.mwojnar.GameObjects.Bubble;
 import com.mwojnar.GameObjects.CrumblyWall;
 import com.mwojnar.GameObjects.EnemyA;
+import com.mwojnar.GameObjects.Hud;
 import com.mwojnar.GameObjects.Mine;
+import com.mwojnar.GameObjects.Monster;
 import com.mwojnar.GameObjects.Submarine;
 import com.mwojnar.GameWorld.GMTKJamWorld.Mode;
 import com.mwojnar.Assets.AssetLoader;
@@ -31,6 +33,7 @@ import com.playgon.GameEngine.TouchEvent;
 import com.playgon.GameWorld.GameWorld;
 import com.playgon.Utils.LoadingThread;
 import com.playgon.Utils.Pair;
+import com.playgon.Utils.PlaygonMath;
 
 public class GMTKJamWorld extends GameWorld {
 	
@@ -38,9 +41,10 @@ public class GMTKJamWorld extends GameWorld {
 	
 	private Mode mode = Mode.GAME;
 	private LoadingThread loadingThread = null;
-	private boolean showFPS = true, paused = false;
+	private boolean showFPS = true, paused = false, started = false;
 	private float nextSpawnPos = 0.0f;
 	private long framesSinceLevelCreation = 0;
+	private Monster monster = null;
 	private FileHandle levelToLoad = null;
 	private Random rand = new Random();
 	private Background mainBackground;
@@ -87,6 +91,16 @@ public class GMTKJamWorld extends GameWorld {
 		submarine = new Submarine(this);
 		submarine.setPos(200.0f, 320.0f, true);
 		createEntity(submarine);
+		Bubble bubble = new Bubble(this);
+		bubble.setPos(200.0f, 320.0f, true);
+		bubble.setGridVelocity(0.0f, 0.0f);
+		createEntity(bubble);
+		monster = new Monster(this);
+		monster.setPos(0.0f, 480.0f, false);
+		createEntity(monster);
+		createEntity(new Hud(this));
+		started = false;
+		
 		addBackgrounds();
 		AssetLoader.musicHandler.startMusic(AssetLoader.mainMusic);
 		
@@ -191,7 +205,13 @@ public class GMTKJamWorld extends GameWorld {
 			super.updateMain(delta);
 			if (mode == Mode.GAME) {
 				
-				setCamPos(new Vector2(getCamPos(true).x, submarine.getPos(false).y - 200.0f - submarine.getGridVelocity().y * 2.0f));
+				Vector2 targetCamPos = new Vector2(getCamPos(true).x, submarine.getPos(false).y - 200.0f - submarine.getGridVelocity().y * 2.0f);
+				if (!started)
+					targetCamPos = new Vector2(getCamPos(true).x, submarine.getPos(true).y);
+				Vector2 nextCamPos = PlaygonMath.getGridVector(15.0f, PlaygonMath.direction(getCamPos(true), targetCamPos)).add(getCamPos(true));
+				if (PlaygonMath.distance(getCamPos(true), targetCamPos) <= 15)
+					nextCamPos = targetCamPos;
+				setCamPos(nextCamPos);
 				if (getCamPos(false).y < nextSpawnPos) {
 					
 					spawnObstacles();
@@ -372,6 +392,30 @@ public class GMTKJamWorld extends GameWorld {
 		
 		return rand;
 		
+	}
+
+	public boolean isStarted() {
+		return started;
+	}
+
+	public void setStarted(boolean started) {
+		this.started = started;
+	}
+
+	public Monster getMonster() {
+		return monster;
+	}
+
+	public void setMonster(Monster monster) {
+		this.monster = monster;
+	}
+	
+	public Submarine getSubmarine() {
+		return submarine;
+	}
+	
+	public void setSubmarine(Submarine submarine) {
+		this.submarine = submarine;
 	}
 	
 }

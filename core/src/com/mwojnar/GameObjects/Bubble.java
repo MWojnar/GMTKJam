@@ -19,6 +19,7 @@ public class Bubble extends Entity {
 		setPivot(getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f);
 		setDepth(60);
 		setAnimationSpeed(15.0f);
+		setGridVelocity(0.0f, -0.11f);
 		
 	}
 	
@@ -27,7 +28,7 @@ public class Bubble extends Entity {
 		
 		super.update(delta, touchEventList, charactersTyped, keysFirstDown, keysFirstUp, keysDown);
 		
-		movePos(0.0f, -0.2f);
+		moveByVelocity();
 		if (getPos(false).y > getWorld().getCamPos(false).y + getWorld().getGameDimensions().y)
 			destroy();
 		for (Entity entity : getWorld().getEntityList())
