@@ -102,7 +102,7 @@ public class AssetLoader {
 	
 	private static void loadMisc() {
 		
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Fonts/high_pixel-7.ttf"));
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Fonts/pixel font-7.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
 		parameter.size = 12;
 		parameter.flip = true;
@@ -110,7 +110,7 @@ public class AssetLoader {
 		debugFont = generator.generateFont(parameter);
 		generator.dispose();
 		
-		generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Fonts/high_pixel-7.ttf"));
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Fonts/pixel font-7.ttf"));
 		parameter = new FreeTypeFontParameter();
 		parameter.size = 144;
 		parameter.flip = true;

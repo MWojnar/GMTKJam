@@ -32,8 +32,8 @@ public class Monster extends Entity {
 		float moveSpeed = 6.0f;
 		if (!((GMTKJamWorld)getWorld()).getSubmarine().isDead())
 			moveSpeed = 3.0f + ((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() / (60.0f * 30.0f);
-		if (moveSpeed > 6.0f)
-			moveSpeed = 6.0f;
+		if (moveSpeed > 8.0f)
+			moveSpeed = 8.0f;
 		if (((GMTKJamWorld)getWorld()).isStarted() && getPos(false).y + getSprite().getHeight() > getWorld().getCamPos(false).y)
 			movePos(0.0f, -moveSpeed);
 		

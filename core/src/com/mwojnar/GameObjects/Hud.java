@@ -58,8 +58,8 @@ public class Hud extends Entity {
 		Submarine sub = ((GMTKJamWorld)getWorld()).getSubmarine();
 		AssetLoader.debugFont.draw(renderer.getBatcher(), "SCORE", getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 2.0f);
 		AssetLoader.debugFont.draw(renderer.getBatcher(), Integer.toString(((GMTKJamWorld)getWorld()).getRawScore()), getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 20.0f);
-		AssetLoader.debugFont.draw(renderer.getBatcher(), "COMBO", getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 38.0f);
-		AssetLoader.debugFont.draw(renderer.getBatcher(), Integer.toString(sub.getCombo()), getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 56.0f);
+		AssetLoader.debugFont.draw(renderer.getBatcher(), "COMBO", getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 56.0f);
+		AssetLoader.debugFont.draw(renderer.getBatcher(), Integer.toString(sub.getCombo()), getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 74.0f);
 		
 	}
 
@@ -72,6 +72,8 @@ public class Hud extends Entity {
 			if (!sub.isDead())
 				distance = PlaygonMath.distance(sub.getPos(true), ((GMTKJamWorld)getWorld()).getMonster().getPos(true));
 			lastDistance = distance;
+			if (distance > 6200)
+				distance = 6200;
 			float x1 = getWorld().getGameDimensions().x - 2.0f - AssetLoader.spriteDistanceHud.getWidth() / 2.0f;
 			float y1 = getWorld().getGameDimensions().y - 2.0f - AssetLoader.spriteDistanceHud.getHeight() / 2.0f;
 			float x2 = x1;

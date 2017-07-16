@@ -313,6 +313,7 @@ public class Submarine extends Entity {
 								
 								((GMTKJamWorld)getWorld()).addRawScore(nextScore);
 								nextScore += 1000;
+								setGridVelocity(getGridVelocity().x, getGridVelocity().y - 2.0f);
 								
 							}
 							
