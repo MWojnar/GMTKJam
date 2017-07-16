@@ -28,7 +28,8 @@ public class Bubble extends Entity {
 		
 		super.update(delta, touchEventList, charactersTyped, keysFirstDown, keysFirstUp, keysDown);
 		
-		moveByVelocity();
+		if (getPos(false).y + getSprite().getHeight() > getWorld().getCamPos(false).y)
+			moveByVelocity();
 		if (getPos(false).y > getWorld().getCamPos(false).y + getWorld().getGameDimensions().y)
 			destroy();
 		for (Entity entity : getWorld().getEntityList())

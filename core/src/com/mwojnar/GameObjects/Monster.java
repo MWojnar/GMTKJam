@@ -13,8 +13,6 @@ import com.playgon.GameWorld.GameWorld;
 
 public class Monster extends Entity {
 	
-	private float moveSpeed = 5.0f;
-	
 	public Monster(GameWorld myWorld) {
 		
 		super(myWorld);
@@ -31,6 +29,9 @@ public class Monster extends Entity {
 		
 		super.update(delta, touchEventList, charactersTyped, keysFirstDown, keysFirstUp, keysDown);
 		
+		float moveSpeed = 3.0f + ((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() / (60.0f * 30.0f);
+		if (moveSpeed > 5.0f)
+			moveSpeed = 5.0f;
 		if (((GMTKJamWorld)getWorld()).isStarted() && getPos(false).y + getSprite().getHeight() > getWorld().getCamPos(false).y)
 			movePos(0.0f, -moveSpeed);
 		

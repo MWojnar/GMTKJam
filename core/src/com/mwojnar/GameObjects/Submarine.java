@@ -334,6 +334,9 @@ public class Submarine extends Entity {
 		dead = true;
 		setGridVelocity(0.0f, 0.0f);
 		air = 0.0f;
+		charge = 0.0f;
+		setFrame(0);
+		setSprite(AssetLoader.spriteSubmarine);
 		
 	}
 

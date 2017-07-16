@@ -44,6 +44,7 @@ public class GMTKJamWorld extends GameWorld {
 	private boolean showFPS = true, paused = false, started = false;
 	private float nextSpawnPos = 0.0f;
 	private long framesSinceLevelCreation = 0;
+	private int lastChoice = -1;
 	private Monster monster = null;
 	private FileHandle levelToLoad = null;
 	private Random rand = new Random();
@@ -88,6 +89,8 @@ public class GMTKJamWorld extends GameWorld {
 			}
 			
 		}
+		
+		framesSinceLevelCreation = 0;
 		submarine = new Submarine(this);
 		submarine.setPos(200.0f, 320.0f, true);
 		createEntity(submarine);
@@ -215,7 +218,7 @@ public class GMTKJamWorld extends GameWorld {
 				if (getCamPos(false).y < nextSpawnPos) {
 					
 					spawnObstacles();
-					nextSpawnPos -= getGameDimensions().y;
+					nextSpawnPos -= getGameDimensions().y + 16 * 6;
 					
 				}
 				
@@ -232,7 +235,85 @@ public class GMTKJamWorld extends GameWorld {
 	
 	private void spawnObstacles() {
 		
-		Bubble bubble = new Bubble(this);
+		int choice = rand.nextInt(4);
+		while(choice == lastChoice)
+			choice = rand.nextInt(4);
+		
+		switch (choice) {
+		
+		case 0:spawnObstacle(new Bubble(this), 1, 5);
+		spawnObstacle(new Mine(this), 7, 3);
+		spawnObstacle(new EnemyA(this), 5, 8);
+		spawnObstacle(new Mine(this), 2, 11);
+		spawnObstacle(new CrumblyWall(this), 5, 5);
+		spawnObstacle(new CrumblyWall(this), 6, 5);
+		spawnObstacle(new CrumblyWall(this), 7, 5);
+		spawnObstacle(new CrumblyWall(this), 8, 5);
+		spawnObstacle(new CrumblyWall(this), 9, 5);
+		spawnObstacle(new CrumblyWall(this), 0, 13);
+		spawnObstacle(new CrumblyWall(this), 1, 13);
+		spawnObstacle(new CrumblyWall(this), 2, 13);
+		spawnObstacle(new CrumblyWall(this), 3, 13);
+		spawnObstacle(new CrumblyWall(this), 4, 13);
+		break;
+		case 1:spawnObstacle(new CrumblyWall(this), 0, 9);
+		spawnObstacle(new CrumblyWall(this), 1, 9);
+		spawnObstacle(new CrumblyWall(this), 2, 9);
+		spawnObstacle(new CrumblyWall(this), 3, 9);
+		spawnObstacle(new CrumblyWall(this), 4, 9);
+		spawnObstacle(new CrumblyWall(this), 5, 9);
+		spawnObstacle(new CrumblyWall(this), 6, 9);
+		spawnObstacle(new CrumblyWall(this), 7, 9);
+		spawnObstacle(new CrumblyWall(this), 8, 9);
+		spawnObstacle(new CrumblyWall(this), 9, 9);
+		spawnObstacle(new CrumblyWall(this), 0, 10);
+		spawnObstacle(new CrumblyWall(this), 1, 10);
+		spawnObstacle(new CrumblyWall(this), 2, 10);
+		spawnObstacle(new CrumblyWall(this), 3, 10);
+		spawnObstacle(new CrumblyWall(this), 4, 10);
+		spawnObstacle(new CrumblyWall(this), 5, 10);
+		spawnObstacle(new CrumblyWall(this), 6, 10);
+		spawnObstacle(new CrumblyWall(this), 7, 10);
+		spawnObstacle(new CrumblyWall(this), 8, 10);
+		spawnObstacle(new CrumblyWall(this), 9, 10);
+		spawnObstacle(new CrumblyWall(this), 0, 11);
+		spawnObstacle(new CrumblyWall(this), 1, 11);
+		spawnObstacle(new CrumblyWall(this), 2, 11);
+		spawnObstacle(new CrumblyWall(this), 3, 11);
+		spawnObstacle(new CrumblyWall(this), 4, 11);
+		spawnObstacle(new CrumblyWall(this), 5, 11);
+		spawnObstacle(new CrumblyWall(this), 6, 11);
+		spawnObstacle(new CrumblyWall(this), 7, 11);
+		spawnObstacle(new CrumblyWall(this), 8, 11);
+		spawnObstacle(new CrumblyWall(this), 9, 11);
+		spawnObstacle(new EnemyA(this), 4, 2);
+		spawnObstacle(new Bubble(this), 3, 5);
+		spawnObstacle(new Bubble(this), 6, 5);
+		spawnObstacle(new Mine(this), 1, 8);
+		spawnObstacle(new Mine(this), 8, 8);
+		break;
+		case 2:spawnObstacle(new Mine(this), 6, 2);
+		spawnObstacle(new Mine(this), 5, 5);
+		spawnObstacle(new Mine(this), 4, 8);
+		spawnObstacle(new Mine(this), 3, 11);
+		spawnObstacle(new Bubble(this), 7, 9);
+		spawnObstacle(new Bubble(this), 2, 4);
+		break;
+		case 3:spawnObstacle(new EnemyA(this), 4, 0);
+		spawnObstacle(new EnemyA(this), 5, 4);
+		spawnObstacle(new EnemyA(this), 4, 8);
+		spawnObstacle(new EnemyA(this), 5, 12);
+		spawnObstacle(new Mine(this), 1, 1);
+		spawnObstacle(new Mine(this), 8, 10);
+		spawnObstacle(new Bubble(this), 1, 10);
+		spawnObstacle(new Bubble(this), 8, 1);
+		break;
+		
+		}
+		
+		lastChoice = choice;
+		
+		/*Bubble bubble = new Bubble(this);
 		bubble.setPos(rand.nextFloat() * (getGameDimensions().x - 300.0f) + 150.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
 		createEntity(bubble);
 		
@@ -246,7 +327,14 @@ public class GMTKJamWorld extends GameWorld {
 		
 		CrumblyWall wall = new CrumblyWall(this);
 		wall.setPos(rand.nextFloat() * (getGameDimensions().x - 200.0f) + 100.0f, getCamPos(false).y - 200 - getGameDimensions().y * rand.nextFloat(), true);
-		createEntity(wall);
+		createEntity(wall);*/
+		
+	}
+
+	private void spawnObstacle(Entity entity, int x, int y) {
+		
+		entity.setPos(56.0f + x * 32.0f, getCamPos(false).y - 200.0f - getGameDimensions().y + 16.0f + 32.0f * y, true);
+		createEntity(entity);
 		
 	}
 

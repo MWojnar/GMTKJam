@@ -26,7 +26,6 @@ public class EnemyA extends Enemy {
 		setPivot(getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f);
 		setMask(new Mask(this, new Vector2(getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f), 22.0f));
 		setDepth(40);
-		isLeft = ((GMTKJamWorld)getWorld()).getRandom().nextBoolean();
 		setAnimationSpeed(10.0f);
 		
 	}
@@ -40,23 +39,29 @@ public class EnemyA extends Enemy {
 			
 			startPos = getPos(true).cpy();
 			startPos.x = getWorld().getGameDimensions().x / 2.0f;
+			if (getPos(true).x < getWorld().getGameDimensions().x / 2.0f)
+				isLeft = true;
 			
 		}
 		
-		if (isLeft)
-			movePos(-moveSpeed, 0.0f);
-		else
-			movePos(moveSpeed, 0.0f);
-		
-		if (getPos(true).x - startPos.x >= edgeBuffer)
-			isLeft = true;
-		if (getPos(true).x - startPos.x <= -edgeBuffer)
-			isLeft = false;
-		
-		setPos(getPos(true).x, startPos.y + (float)Math.sin(((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() / 20.0f) * amplitude, true);
-		
-		if (getPos(false).y > getWorld().getCamPos(false).y + getWorld().getGameDimensions().y)
-			destroy();
+		if (getPos(false).y + getSprite().getHeight() > getWorld().getCamPos(false).y) {
+					
+			if (isLeft)
+				movePos(-moveSpeed, 0.0f);
+			else
+				movePos(moveSpeed, 0.0f);
+			
+			if (getPos(true).x - startPos.x >= edgeBuffer)
+				isLeft = true;
+			if (getPos(true).x - startPos.x <= -edgeBuffer)
+				isLeft = false;
+			
+			setPos(getPos(true).x, startPos.y + (float)Math.sin(((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() / 20.0f) * amplitude, true);
+			
+			if (getPos(false).y > getWorld().getCamPos(false).y + getWorld().getGameDimensions().y)
+				destroy();
+			
+		}
 		
 		handleCollisions();
 		
