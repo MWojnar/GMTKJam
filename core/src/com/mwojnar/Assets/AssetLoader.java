@@ -36,11 +36,13 @@ public class AssetLoader {
 	public static TextureRegion submarineTexture, enemyATexture, bubbleTexture, wallTexture, backgroundTexture,
 								chargeMeterTexture, submarineChargingTexture, bubblePopTexture, airMeterTexture,
 								submarineAttackFireTexture, particleBubbleTexture, mineTexture, crumblyWallTexture,
-								backWallTexture, parallaxWall1Texture, parallaxWall2Texture;
+								backWallTexture, parallaxWall1Texture, parallaxWall2Texture, enemyAParticleTexture,
+								mineParticleTexture, crumblyWallParticleTexture;
 	public static TextureRegion whiteTexture, yellowTexture, redTexture;
 	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall, spriteChargeMeter,
 						 spriteSubmarineCharging, spriteBubblePop, spriteAirMeter, spriteSubmarineAttackFire,
-						 spriteParticleBubble, spriteMine, spriteCrumblyWall;
+						 spriteParticleBubble, spriteMine, spriteCrumblyWall, spriteEnemyAParticle, spriteMineParticle,
+						 spriteCrumblyWallParticle;
 	public static Sprite spriteWhite, spriteYellow, spriteRed;
 	public static BackgroundTemplate background, backWall, parallaxWall1, parallaxWall2;
 	public static MusicTemplate mainMusic;
@@ -139,6 +141,9 @@ public class AssetLoader {
 		particleBubbleTexture = atlas.findRegion("spr_propulsion_bubble");
 		mineTexture = atlas.findRegion("spr_mine");
 		crumblyWallTexture = atlas.findRegion("spr_breakablewall");
+		enemyAParticleTexture = atlas.findRegion("spr_enemyA_particles");
+		mineParticleTexture = atlas.findRegion("spr_mine_particles");
+		crumblyWallParticleTexture = atlas.findRegion("spr_breakablewall_particles");
 		
 		backgroundTexture = atlas.findRegion("background");
 		backWallTexture = atlas.findRegion("ts_walls");
@@ -164,6 +169,9 @@ public class AssetLoader {
 		spriteParticleBubble = new Sprite(particleBubbleTexture, 8);
 		spriteMine = new Sprite(mineTexture, 12);
 		spriteCrumblyWall = new Sprite(crumblyWallTexture, 1);
+		spriteEnemyAParticle = new Sprite(enemyAParticleTexture, 4);
+		spriteMineParticle = new Sprite(mineParticleTexture, 4);
+		spriteCrumblyWallParticle = new Sprite(crumblyWallParticleTexture, 4);
 		
 		spriteWall = new Sprite(wallTexture, 1);
 		

@@ -32,7 +32,7 @@ public class Submarine extends Entity {
 				  superBoostAttackDuration;
 	private float charge = 0.0f, air = 0.0f, currentMaxVerticalSpeed = 0.0f;
 	private int cooldownLeft = 0, bubbleTweenFrames = 0, startBubbleTweenFrames = 10, superBoostCooldown = 0,
-			invincibilityTimer = 0, invincibilityTimerMax = 60, recoilTimer = 0, recoilTimerMax = 30;
+			invincibilityTimer = 0, invincibilityTimerMax = 90, recoilTimer = 0, recoilTimerMax = 30;
 	private boolean superCooldown = false, bubbleMaxSpeed = false;
 	private Bubble stickBubble = null;
 	private ChargeMode chargeMode = ChargeMode.IDLE;
@@ -84,27 +84,27 @@ public class Submarine extends Entity {
 			
 		} catch (Exception e) {
 			
-			chargeSpeed = 2.0f;
-			horizontalMaxSpeed = 8.0f;
-			horizontalAcceleration = 0.5f;
-			horizontalDeceleration = 0.25f;
+			chargeSpeed = 0.1f;
+			horizontalMaxSpeed = 4.0f;
+			horizontalAcceleration = 1.0f;
+			horizontalDeceleration = 0.5f;
 			chargeMultiplier = 1.0f;
 			superChargeMultiplier = 0.5f;
-			superChargeThreshold = 18.0f;
-			maxCharge = 24.0f;
-			boostDeceleration = 3.0f;
-			verticalDeceleration = 0.2f;
-			airLossRate = 0.005f;
+			superChargeThreshold = 5.0f;
+			maxCharge = 7.0f;
+			boostDeceleration = 0.06f;
+			verticalDeceleration = 0.04f;
+			airLossRate = 0.01f;
 			airLossFromEnemy = 0.1f;
-			airGainRate = 0.05f;
+			airGainRate = 0.04f;
 			maxAir = 10.0f;
 			minVerticalSpeed = 0.1f;
-			maxVerticalSpeed = 20.0f;
-			chargeCooldownMultiplier = 0.3f;
-			superChargeCooldownAddition = 60.0f;
-			minChargeSpeed = 2.0f;
-			bubbleChargeSpeed = 0.5f;
-			bubbleAddSpeed = 20.0f;
+			maxVerticalSpeed = 10.0f;
+			chargeCooldownMultiplier = 10.0f;
+			superChargeCooldownAddition = 120.0f;
+			minChargeSpeed = 2.5f;
+			bubbleChargeSpeed = 0.175f;
+			bubbleAddSpeed = 2.0f;
 			superBoostAttackDuration = 150.0f;
 			
 			air = maxAir;
@@ -157,11 +157,11 @@ public class Submarine extends Entity {
 				charge += chargeSpeed;
 			else
 				charge += bubbleChargeSpeed;
-			if (getGridVelocity().y < 0)
+			if (recoilTimer <= 0)
 				setGridVelocity(getGridVelocity().x, getGridVelocity().y + boostDeceleration);
 			chargeMode = ChargeMode.CHARGING;
 			
-		} else if (getGridVelocity().y < 0)
+		} else if (recoilTimer <= 0)
 			setGridVelocity(getGridVelocity().x, getGridVelocity().y + verticalDeceleration);
 		if (charge > maxCharge || (charge > 0 && !keysDown.contains(com.badlogic.gdx.Input.Keys.SPACE)))
 			burst();
@@ -169,17 +169,21 @@ public class Submarine extends Entity {
 			chargeMode = ChargeMode.UNCHARGING;
 		else if (!boosting)
 			chargeMode = ChargeMode.IDLE;
-		if (keysDown.contains(com.badlogic.gdx.Input.Keys.LEFT))
-			setGridVelocity(getGridVelocity().x - horizontalAcceleration, getGridVelocity().y);
-		else if (keysDown.contains(com.badlogic.gdx.Input.Keys.RIGHT))
-			setGridVelocity(getGridVelocity().x + horizontalAcceleration, getGridVelocity().y);
-		else {
+		if (recoilTimer <= 0) {
 			
-			float decelerationMultiple = -Math.signum(getGridVelocity().x);
-			float newHorizontalSpeed = getGridVelocity().x + decelerationMultiple * horizontalDeceleration;
-			if (-Math.signum(newHorizontalSpeed) != decelerationMultiple)
-				newHorizontalSpeed = 0;
-			setGridVelocity(newHorizontalSpeed, getGridVelocity().y);
+			if (keysDown.contains(com.badlogic.gdx.Input.Keys.LEFT))
+				setGridVelocity(getGridVelocity().x - horizontalAcceleration, getGridVelocity().y);
+			else if (keysDown.contains(com.badlogic.gdx.Input.Keys.RIGHT))
+				setGridVelocity(getGridVelocity().x + horizontalAcceleration, getGridVelocity().y);
+			else {
+				
+				float decelerationMultiple = -Math.signum(getGridVelocity().x);
+				float newHorizontalSpeed = getGridVelocity().x + decelerationMultiple * horizontalDeceleration;
+				if (-Math.signum(newHorizontalSpeed) != decelerationMultiple)
+					newHorizontalSpeed = 0;
+				setGridVelocity(newHorizontalSpeed, getGridVelocity().y);
+				
+			}
 			
 		}
 		if (bubbleMaxSpeed && Math.abs(getGridVelocity().y) <= maxVerticalSpeed) {
@@ -266,7 +270,7 @@ public class Submarine extends Entity {
 							((Enemy)entity).burst();
 						else {
 							
-							recoil();
+							recoil(entity.getPos(true));
 							if (!(entity instanceof CrumblyWall)) {
 								
 								invincibilityTimer = invincibilityTimerMax;
@@ -401,10 +405,10 @@ public class Submarine extends Entity {
 		
 	}
 	
-	private void recoil() {
+	private void recoil(Vector2 recoilPoint) {
 		
 		recoilTimer = recoilTimerMax;
-		setGridVelocity(getGridVelocity().x, 0.5f);
+		setRadialVelocity(0.5f, PlaygonMath.direction(recoilPoint, getPos(true)));
 		
 	}
 	

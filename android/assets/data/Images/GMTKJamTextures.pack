@@ -52,6 +52,13 @@ spr_breakablewall
   orig: 32, 32
   offset: 0, 0
   index: -1
+spr_breakablewall_particles
+  rotate: false
+  xy: 622, 132
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: 4
 spr_bubble
   rotate: false
   xy: 408, 310
@@ -80,11 +87,32 @@ spr_enemyA
   orig: 288, 48
   offset: 0, 0
   index: -1
+spr_enemyA_particles
+  rotate: false
+  xy: 660, 126
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: 4
 spr_mine
   rotate: false
   xy: 2, 110
   size: 576, 48
   orig: 576, 48
+  offset: 0, 0
+  index: -1
+spr_mine_particles
+  rotate: false
+  xy: 698, 126
+  size: 32, 8
+  orig: 32, 8
+  offset: 0, 0
+  index: 4
+spr_monster
+  rotate: false
+  xy: 2, 164
+  size: 400, 128
+  orig: 400, 128
   offset: 0, 0
   index: -1
 spr_propulsion_bubble
@@ -124,21 +152,21 @@ spr_sub_hb
   index: -1
 ts_parallax1
   rotate: false
-  xy: 2, 164
+  xy: 2, 298
   size: 400, 128
   orig: 400, 128
   offset: 0, 0
   index: -1
 ts_parallax2
   rotate: false
-  xy: 2, 298
+  xy: 558, 280
   size: 400, 128
   orig: 400, 128
   offset: 0, 0
   index: -1
 ts_walls
   rotate: false
-  xy: 558, 280
+  xy: 408, 414
   size: 400, 128
   orig: 400, 128
   offset: 0, 0

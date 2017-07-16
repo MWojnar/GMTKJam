@@ -137,7 +137,7 @@ public class Particle extends Entity {
 		
 		camPos = getWorld().getCamPos(false);
 		gameDimensions = getWorld().getGameDimensions();
-		screenRectangle.set(camPos.x - 100, camPos.y - 100, gameDimensions.x + 200, gameDimensions.y + 200);
+		screenRectangle.set(camPos.x + 40, camPos.y - 100, gameDimensions.x - 80, gameDimensions.y + 200);
 		rectangle.set(getMask().getBoundingRectangle());
 		if (!getMask().isEmpty()) {
 			

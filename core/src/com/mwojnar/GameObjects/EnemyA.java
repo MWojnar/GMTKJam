@@ -11,6 +11,7 @@ import com.playgon.GameEngine.Mask;
 import com.playgon.GameEngine.TouchEvent;
 import com.playgon.GameWorld.GameRenderer;
 import com.playgon.GameWorld.GameWorld;
+import com.playgon.Utils.PlaygonMath;
 
 public class EnemyA extends Enemy {
 	
@@ -92,6 +93,46 @@ public class EnemyA extends Enemy {
 		
 		float rotation = (float)Math.sin(((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() / 20.0f + 1.0f) * 90.0f / (float)Math.PI;
 		getSprite().draw(getPos(false).x, getPos(false).y, getFrame(), isLeft ? 1.0f : -1.0f, 1.0f, isLeft ? -rotation : rotation, getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f, renderer);
+		
+	}
+	
+	@Override
+	public void burst() {
+		
+		destroy();
+		
+		for (int i = 0; i < 5; i++) {
+			
+			Vector2 pos = PlaygonMath.getGridVector(getSprite().getWidth() / 12.0f, i * 2.0f * (float)Math.PI / 5.0f + ((GMTKJamWorld)getWorld()).getRandom().nextFloat() * 3.0f - 1.5f).add(getPos(true));
+			Vector2 gridVelocity = PlaygonMath.getGridVector(((GMTKJamWorld)getWorld()).getRandom().nextFloat() * 0.5f + 0.5f, i * 2.0f * (float)Math.PI / 5.0f + ((GMTKJamWorld)getWorld()).getRandom().nextFloat() * 0.2f - 0.1f).add(0.0f, -2.5f);
+			generateParticle(pos, gridVelocity);
+			
+		}
+		for (int i = 0; i < 10; i++) {
+			
+			Vector2 pos = PlaygonMath.getGridVector(getSprite().getWidth() / 3.0f, i * 2.0f * (float)Math.PI / 5.0f + ((GMTKJamWorld)getWorld()).getRandom().nextFloat() * 3.0f - 1.5f).add(getPos(true));
+			Vector2 gridVelocity = PlaygonMath.getGridVector(((GMTKJamWorld)getWorld()).getRandom().nextFloat() * 0.5f + 0.5f, i * 2.0f * (float)Math.PI / 5.0f + ((GMTKJamWorld)getWorld()).getRandom().nextFloat() * 0.2f - 0.1f).add(0.0f, -2.5f);
+			generateParticle(pos, gridVelocity);
+			
+		}
+		
+	}
+	
+	private void generateParticle(Vector2 pos, Vector2 gridVelocity) {
+		
+		Particle particle = new Particle(getWorld());
+		particle.setSprite(AssetLoader.spriteEnemyAParticle);
+		particle.setPos(pos, true);
+		particle.setForceUpdate(true);
+		particle.setShrinking(true);
+		particle.setTimed(true);
+		particle.setMaxTime(120);
+		particle.setRotates(true);
+		particle.setRotationSpeed(((GMTKJamWorld)getWorld()).getRandom().nextFloat() * 0.02f - 0.01f);
+		particle.setAnimationSpeed(0.0f);
+		particle.setFrame(((GMTKJamWorld)getWorld()).getRandom().nextInt(4));
+		particle.setGridVelocity(gridVelocity);
+		getWorld().createEntity(particle);
 		
 	}
 	
