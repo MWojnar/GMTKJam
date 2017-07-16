@@ -37,12 +37,15 @@ public class AssetLoader {
 								chargeMeterTexture, submarineChargingTexture, bubblePopTexture, airMeterTexture,
 								submarineAttackFireTexture, particleBubbleTexture, mineTexture, crumblyWallTexture,
 								backWallTexture, parallaxWall1Texture, parallaxWall2Texture, enemyAParticleTexture,
-								mineParticleTexture, crumblyWallParticleTexture, monsterTexture, distanceHudTexture;
+								mineParticleTexture, crumblyWallParticleTexture, monsterTexture, distanceHudTexture,
+								explosionRedSmallTexture, explosionRedLargeTexture, explosionYellowSmallTexture,
+								explosionYellowLargeTexture;
 	public static TextureRegion whiteTexture, yellowTexture, redTexture, blackTexture;
 	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall, spriteChargeMeter,
 						 spriteSubmarineCharging, spriteBubblePop, spriteAirMeter, spriteSubmarineAttackFire,
 						 spriteParticleBubble, spriteMine, spriteCrumblyWall, spriteEnemyAParticle, spriteMineParticle,
-						 spriteCrumblyWallParticle, spriteMonster, spriteDistanceHud;
+						 spriteCrumblyWallParticle, spriteMonster, spriteDistanceHud, spriteExplosionRedSmall,
+						 spriteExplosionRedLarge, spriteExplosionYellowSmall, spriteExplosionYellowLarge;
 	public static Sprite spriteWhite, spriteYellow, spriteRed, spriteBlack;
 	public static BackgroundTemplate background, backWall, parallaxWall1, parallaxWall2;
 	public static MusicTemplate mainMusic;
@@ -146,6 +149,10 @@ public class AssetLoader {
 		crumblyWallParticleTexture = atlas.findRegion("spr_breakablewall_particles");
 		monsterTexture = atlas.findRegion("spr_monster");
 		distanceHudTexture = atlas.findRegion("spr_distance_HUD");
+		explosionRedSmallTexture = atlas.findRegion("spr_explosion2R");
+		explosionRedLargeTexture = atlas.findRegion("spr_explosion1R");
+		explosionYellowSmallTexture = atlas.findRegion("spr_explosion2Y");
+		explosionYellowLargeTexture = atlas.findRegion("spr_explosion1Y");
 		
 		backgroundTexture = atlas.findRegion("background");
 		backWallTexture = atlas.findRegion("ts_walls");
@@ -177,6 +184,10 @@ public class AssetLoader {
 		spriteCrumblyWallParticle = new Sprite(crumblyWallParticleTexture, 4);
 		spriteMonster = new Sprite(monsterTexture, 1);
 		spriteDistanceHud = new Sprite(distanceHudTexture, 2);
+		spriteExplosionRedSmall = new Sprite(explosionRedSmallTexture, 8);
+		spriteExplosionRedLarge = new Sprite(explosionRedLargeTexture, 5);
+		spriteExplosionYellowSmall = new Sprite(explosionYellowSmallTexture, 8);
+		spriteExplosionYellowLarge = new Sprite(explosionYellowLargeTexture, 5);
 		
 		spriteWall = new Sprite(wallTexture, 1);
 		

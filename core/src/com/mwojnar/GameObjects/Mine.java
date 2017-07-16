@@ -60,6 +60,20 @@ public class Mine extends Enemy {
 			generateParticle(pos, gridVelocity);
 			
 		}
+		for (int i = 0; i < 5; i++) {
+			
+			ParticleBubble explosion = new ParticleBubble(getWorld());
+			explosion.setPos(getPos(false).x + ((GMTKJamWorld)getWorld()).getRandom().nextFloat() * getSprite().getWidth(), getPos(false).y + ((GMTKJamWorld)getWorld()).getRandom().nextFloat() * getSprite().getHeight(), true);
+			if (((GMTKJamWorld)getWorld()).getRandom().nextBoolean())
+				explosion.setSprite(AssetLoader.spriteExplosionRedSmall);
+			else
+				explosion.setSprite(AssetLoader.spriteExplosionRedLarge);
+			explosion.setPivot(explosion.getSprite().getWidth() / 2.0f, explosion.getSprite().getHeight() / 2.0f);
+			explosion.setRotation(((GMTKJamWorld)getWorld()).getRandom().nextFloat() * 360.0f);
+			explosion.setAnimationSpeed(15.0f);
+			getWorld().createEntity(explosion);
+			
+		}
 		
 	}
 	

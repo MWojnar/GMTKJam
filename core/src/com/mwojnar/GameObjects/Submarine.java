@@ -331,12 +331,31 @@ public class Submarine extends Entity {
 
 	private void die() {
 		
-		dead = true;
-		setGridVelocity(0.0f, 0.0f);
-		air = 0.0f;
-		charge = 0.0f;
-		setFrame(0);
-		setSprite(AssetLoader.spriteSubmarine);
+		if (!dead) {
+			
+			dead = true;
+			setGridVelocity(0.0f, 0.0f);
+			air = 0.0f;
+			charge = 0.0f;
+			setFrame(0);
+			setSprite(AssetLoader.spriteSubmarine);
+			destroy();
+			for (int i = 0; i < 5; i++) {
+				
+				ParticleBubble explosion = new ParticleBubble(getWorld());
+				explosion.setPos(getPos(false).x + ((GMTKJamWorld)getWorld()).getRandom().nextFloat() * getSprite().getWidth(), getPos(false).y + ((GMTKJamWorld)getWorld()).getRandom().nextFloat() * getSprite().getHeight(), true);
+				if (((GMTKJamWorld)getWorld()).getRandom().nextBoolean())
+					explosion.setSprite(AssetLoader.spriteExplosionYellowSmall);
+				else
+					explosion.setSprite(AssetLoader.spriteExplosionYellowLarge);
+				explosion.setPivot(explosion.getSprite().getWidth() / 2.0f, explosion.getSprite().getHeight() / 2.0f);
+				explosion.setRotation(((GMTKJamWorld)getWorld()).getRandom().nextFloat() * 360.0f);
+				explosion.setAnimationSpeed(15.0f);
+				getWorld().createEntity(explosion);
+				
+			}
+			
+		}
 		
 	}
 

@@ -29,7 +29,7 @@ public class Hud extends Entity {
 			frame = 58;
 		if (frame < 0)
 			frame = 0;
-		if (sub.getAir() / sub.getMaxAir() <= 0.25f && ((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() % 20 > 9)
+		if ((sub.getAir() / sub.getMaxAir() <= 0.25f && ((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() % 20 > 9) || sub.getAir() <= 0.0f)
 			AssetLoader.spriteAirMeter.drawAbsolute(2.0f, getWorld().getGameDimensions().y - AssetLoader.spriteAirMeter.getHeight() - 2.0f, frame, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, Color.RED, renderer);
 		else
 			AssetLoader.spriteAirMeter.drawAbsolute(2.0f, getWorld().getGameDimensions().y - AssetLoader.spriteAirMeter.getHeight() - 2.0f, frame, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
