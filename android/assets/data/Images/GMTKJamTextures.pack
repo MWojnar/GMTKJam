@@ -38,6 +38,13 @@ icon128
   orig: 64, 64
   offset: 0, 0
   index: -1
+Logo
+  rotate: false
+  xy: 2, 432
+  size: 256, 63
+  orig: 256, 63
+  offset: 0, 0
+  index: -1
 red
   rotate: false
   xy: 1019, 116

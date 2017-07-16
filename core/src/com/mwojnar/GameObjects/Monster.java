@@ -30,8 +30,8 @@ public class Monster extends Entity {
 		super.update(delta, touchEventList, charactersTyped, keysFirstDown, keysFirstUp, keysDown);
 		
 		float moveSpeed = 3.0f + ((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() / (60.0f * 30.0f);
-		if (moveSpeed > 5.0f)
-			moveSpeed = 5.0f;
+		if (moveSpeed > 6.0f)
+			moveSpeed = 6.0f;
 		if (((GMTKJamWorld)getWorld()).isStarted() && getPos(false).y + getSprite().getHeight() > getWorld().getCamPos(false).y)
 			movePos(0.0f, -moveSpeed);
 		
@@ -53,6 +53,13 @@ public class Monster extends Entity {
 		
 		AssetLoader.spriteBlack.drawMonocolorTriangle(x1, y1, x2, y2, x3, y3, 1.0f, renderer);
 		AssetLoader.spriteBlack.drawMonocolorTriangle(x4, y4, x2, y2, x3, y3, 1.0f, renderer);
+		
+	}
+	
+	public void teleport() {
+		
+		if (getPos(false).y > getWorld().getCamPos(false).y + getWorld().getGameDimensions().y)
+			setPos(getPos(false).x, getWorld().getCamPos(false).y + getWorld().getGameDimensions().y + 300, false);
 		
 	}
 	

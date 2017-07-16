@@ -39,13 +39,14 @@ public class AssetLoader {
 								backWallTexture, parallaxWall1Texture, parallaxWall2Texture, enemyAParticleTexture,
 								mineParticleTexture, crumblyWallParticleTexture, monsterTexture, distanceHudTexture,
 								explosionRedSmallTexture, explosionRedLargeTexture, explosionYellowSmallTexture,
-								explosionYellowLargeTexture;
+								explosionYellowLargeTexture, titleScreenTexture;
 	public static TextureRegion whiteTexture, yellowTexture, redTexture, blackTexture;
 	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall, spriteChargeMeter,
 						 spriteSubmarineCharging, spriteBubblePop, spriteAirMeter, spriteSubmarineAttackFire,
 						 spriteParticleBubble, spriteMine, spriteCrumblyWall, spriteEnemyAParticle, spriteMineParticle,
 						 spriteCrumblyWallParticle, spriteMonster, spriteDistanceHud, spriteExplosionRedSmall,
-						 spriteExplosionRedLarge, spriteExplosionYellowSmall, spriteExplosionYellowLarge;
+						 spriteExplosionRedLarge, spriteExplosionYellowSmall, spriteExplosionYellowLarge,
+						 spriteTitleScreen;
 	public static Sprite spriteWhite, spriteYellow, spriteRed, spriteBlack;
 	public static BackgroundTemplate background, backWall, parallaxWall1, parallaxWall2;
 	public static MusicTemplate mainMusic;
@@ -153,6 +154,7 @@ public class AssetLoader {
 		explosionRedLargeTexture = atlas.findRegion("spr_explosion1R");
 		explosionYellowSmallTexture = atlas.findRegion("spr_explosion2Y");
 		explosionYellowLargeTexture = atlas.findRegion("spr_explosion1Y");
+		titleScreenTexture = atlas.findRegion("Logo");
 		
 		backgroundTexture = atlas.findRegion("background");
 		backWallTexture = atlas.findRegion("ts_walls");
@@ -188,6 +190,7 @@ public class AssetLoader {
 		spriteExplosionRedLarge = new Sprite(explosionRedLargeTexture, 5);
 		spriteExplosionYellowSmall = new Sprite(explosionYellowSmallTexture, 8);
 		spriteExplosionYellowLarge = new Sprite(explosionYellowLargeTexture, 5);
+		spriteTitleScreen = new Sprite(titleScreenTexture, 1);
 		
 		spriteWall = new Sprite(wallTexture, 1);
 		

@@ -339,7 +339,8 @@ public class Submarine extends Entity {
 			charge = 0.0f;
 			setFrame(0);
 			setSprite(AssetLoader.spriteSubmarine);
-			destroy();
+			setVisible(false);
+			((GMTKJamWorld)getWorld()).getMonster().teleport();
 			for (int i = 0; i < 5; i++) {
 				
 				ParticleBubble explosion = new ParticleBubble(getWorld());
@@ -469,6 +470,12 @@ public class Submarine extends Entity {
 	public float getMaxAir() {
 		
 		return maxAir;
+		
+	}
+
+	public boolean isDead() {
+		
+		return dead;
 		
 	}
 	

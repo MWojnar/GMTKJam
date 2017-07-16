@@ -22,6 +22,7 @@ import com.mwojnar.GameObjects.Hud;
 import com.mwojnar.GameObjects.Mine;
 import com.mwojnar.GameObjects.Monster;
 import com.mwojnar.GameObjects.Submarine;
+import com.mwojnar.GameObjects.Title;
 import com.mwojnar.GameWorld.GMTKJamWorld.Mode;
 import com.mwojnar.Assets.AssetLoader;
 import com.playgon.GameEngine.Background;
@@ -90,6 +91,25 @@ public class GMTKJamWorld extends GameWorld {
 			
 		}
 		
+		startMenu();
+		
+		addBackgrounds();
+		AssetLoader.musicHandler.startMusic(AssetLoader.mainMusic);
+		
+		//setGMTKJamView();
+		/*if (loadMenus) {
+			
+			startMenu();
+			
+		}*/
+		
+	}
+	
+	public void startGame() {
+		
+		clearWorld();
+		setCamPos(new Vector2(getGameDimensions().x / 2.0f, getGameDimensions().y / 2.0f));
+		mode = Mode.GAME;
 		framesSinceLevelCreation = 0;
 		submarine = new Submarine(this);
 		submarine.setPos(200.0f, 320.0f, true);
@@ -103,17 +123,6 @@ public class GMTKJamWorld extends GameWorld {
 		createEntity(monster);
 		createEntity(new Hud(this));
 		started = false;
-		
-		addBackgrounds();
-		AssetLoader.musicHandler.startMusic(AssetLoader.mainMusic);
-		
-		//setViewEntity(submarine);
-		//setGMTKJamView();
-		/*if (loadMenus) {
-			
-			startMenu();
-			
-		}*/
 		
 	}
 	
@@ -140,7 +149,10 @@ public class GMTKJamWorld extends GameWorld {
 	public void startMenu() {
 		
 		clearWorld();
+		setCamPos(new Vector2(getGameDimensions().x / 2.0f, getGameDimensions().y / 2.0f));
 		mode = Mode.MENU;
+		Title title = new Title(this);
+		createEntity(title);
 		
 	}
 
@@ -221,6 +233,10 @@ public class GMTKJamWorld extends GameWorld {
 					nextSpawnPos -= getGameDimensions().y + 16 * 6;
 					
 				}
+				
+			} else if (mode == Mode.MENU) {
+				
+				setCamPos(new Vector2(getCamPos(true).x, getCamPos(true).y - 15));
 				
 			}
 			
