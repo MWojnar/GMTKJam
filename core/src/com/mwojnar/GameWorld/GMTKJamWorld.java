@@ -45,7 +45,7 @@ public class GMTKJamWorld extends GameWorld {
 	private boolean showFPS = true, paused = false, started = false;
 	private float nextSpawnPos = 0.0f;
 	private long framesSinceLevelCreation = 0;
-	private int lastChoice = -1;
+	private int lastChoice = -1, timerBonus = 0, rawScore = 0;
 	private Monster monster = null;
 	private FileHandle levelToLoad = null;
 	private Random rand = new Random();
@@ -108,6 +108,8 @@ public class GMTKJamWorld extends GameWorld {
 	public void startGame() {
 		
 		clearWorld();
+		setRawScore(0);
+		timerBonus = 0;
 		setCamPos(new Vector2(getGameDimensions().x / 2.0f, getGameDimensions().y / 2.0f));
 		mode = Mode.GAME;
 		framesSinceLevelCreation = 0;
@@ -503,7 +505,15 @@ public class GMTKJamWorld extends GameWorld {
 	}
 
 	public void setStarted(boolean started) {
+		
+		if (!this.started) {
+			
+			framesSinceLevelCreation = 0;
+			AssetLoader.sndGrpMonster.playRandom(AssetLoader.soundVolume);
+			
+		}
 		this.started = started;
+		
 	}
 
 	public Monster getMonster() {
@@ -520,6 +530,26 @@ public class GMTKJamWorld extends GameWorld {
 	
 	public void setSubmarine(Submarine submarine) {
 		this.submarine = submarine;
+	}
+	
+	public void haltTimerBonus() {
+		
+		timerBonus = (int)framesSinceLevelCreation;
+		
+	}
+
+	public int getRawScore() {
+		return rawScore;
+	}
+
+	public void setRawScore(int rawScore) {
+		this.rawScore = rawScore;
+	}
+
+	public void addRawScore(int addScore) {
+		
+		rawScore += addScore;
+		
 	}
 	
 }

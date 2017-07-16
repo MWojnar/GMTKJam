@@ -49,6 +49,9 @@ public class AssetLoader {
 						 spriteTitleScreen;
 	public static Sprite spriteWhite, spriteYellow, spriteRed, spriteBlack;
 	public static BackgroundTemplate background, backWall, parallaxWall1, parallaxWall2;
+	public static Sound sndAirGain, sndAirLow, sndBubblePop, sndBurst, sndCharging, sndDeath, sndKillFish, sndKillMine,
+						sndMonster1, sndMonster2, sndMonster3, sndSuperBurst;
+	public static SoundGroup sndGrpMonster;
 	public static MusicTemplate mainMusic;
 	public static MusicHandler musicHandler;
 	public static List<Class<? extends Entity>> classList = new ArrayList<Class<? extends Entity>>();
@@ -99,19 +102,60 @@ public class AssetLoader {
 	
 	private static void loadMisc() {
 		
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Fonts/high_pixel-7.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 12;
+		parameter.flip = true;
+		parameter.color = Color.WHITE;
+		debugFont = generator.generateFont(parameter);
+		generator.dispose();
 		
+		generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Fonts/high_pixel-7.ttf"));
+		parameter = new FreeTypeFontParameter();
+		parameter.size = 144;
+		parameter.flip = true;
+		parameter.color = Color.WHITE;
+		titleFont = generator.generateFont(parameter);
+		generator.dispose();
 		
 	}
 	
 	private static void loadSoundsManager() {
 		
-		
+		assetManager.load("data/Sounds/snd_airGain.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_airLow.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_bubble_pop.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_burst.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_charging.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_death.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_killFish.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_killMine.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_monster1.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_monster2.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_monster3.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_superburst.mp3", com.badlogic.gdx.audio.Sound.class);
 		
 	}
 	
 	private static void loadSounds() {
 		
+		sndAirGain = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_airGain.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndAirLow = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_airLow.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndBubblePop = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_bubble_pop.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndBurst = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_burst.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndCharging = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_charging.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndDeath = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_death.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndKillFish = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_killFish.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndKillMine = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_killMine.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndMonster1 = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_monster1.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndMonster2 = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_monster2.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndMonster3 = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_monster3.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndSuperBurst = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_superburst.mp3", com.badlogic.gdx.audio.Sound.class));
 		
+		sndGrpMonster = new SoundGroup();
+		sndGrpMonster.add(sndMonster1);
+		sndGrpMonster.add(sndMonster2);
+		sndGrpMonster.add(sndMonster3);
 		
 	}
 	

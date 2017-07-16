@@ -48,10 +48,21 @@ public class Hud extends Entity {
 		else
 			AssetLoader.spriteAirMeter.drawAbsolute(2.0f, getWorld().getGameDimensions().y - AssetLoader.spriteAirMeter.getHeight() - 2.0f, frame, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, alpha, renderer);
 		
+		drawScore(renderer, alpha);
 		drawDistanceHud(renderer, alpha);
 		
 	}
 	
+	private void drawScore(GameRenderer renderer, float alpha) {
+
+		Submarine sub = ((GMTKJamWorld)getWorld()).getSubmarine();
+		AssetLoader.debugFont.draw(renderer.getBatcher(), "SCORE", getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 2.0f);
+		AssetLoader.debugFont.draw(renderer.getBatcher(), Integer.toString(((GMTKJamWorld)getWorld()).getRawScore()), getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 20.0f);
+		AssetLoader.debugFont.draw(renderer.getBatcher(), "COMBO", getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 38.0f);
+		AssetLoader.debugFont.draw(renderer.getBatcher(), Integer.toString(sub.getCombo()), getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 56.0f);
+		
+	}
+
 	private void drawDistanceHud(GameRenderer renderer, float alpha) {
 		
 		Submarine sub = ((GMTKJamWorld)getWorld()).getSubmarine();

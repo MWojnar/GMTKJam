@@ -33,8 +33,8 @@ public class Submarine extends Entity {
 	private float charge = 0.0f, air = 0.0f, currentMaxVerticalSpeed = 0.0f;
 	private int cooldownLeft = 0, bubbleTweenFrames = 0, startBubbleTweenFrames = 10, superBoostCooldown = 0,
 			invincibilityTimer = 0, invincibilityTimerMax = 90, recoilTimer = 0, recoilTimerMax = 30,
-			bubbleTimer = 0;
-	private boolean superCooldown = false, bubbleMaxSpeed = false, dead = false;
+			bubbleTimer = 0, nextScore = 1000;
+	private boolean superCooldown = false, bubbleMaxSpeed = false, dead = false, beepingPlaying = false;
 	private Bubble stickBubble = null;
 	private ChargeMode chargeMode = ChargeMode.IDLE;
 	
@@ -155,8 +155,13 @@ public class Submarine extends Entity {
 			if (air > maxAir)
 				air = maxAir;
 			boolean boosting = false;
-			if (keysDown.contains(com.badlogic.gdx.Input.Keys.SPACE) && cooldownLeft <= 0)
+			if (keysDown.contains(com.badlogic.gdx.Input.Keys.SPACE) && cooldownLeft <= 0) {
+				
 				boosting = true;
+				if (charge == 0)
+					AssetLoader.sndCharging.play(AssetLoader.soundVolume);
+				
+			}
 			if (boosting) {
 				
 				if (stickBubble == null)
@@ -228,6 +233,27 @@ public class Submarine extends Entity {
 			if (getPos(true).y >= ((GMTKJamWorld)getWorld()).getMonster().getPos(true).y)
 				die();
 			
+			if (air / maxAir < 0.25f) {
+				
+				if (!beepingPlaying) {
+					
+					AssetLoader.sndAirLow.loop(AssetLoader.soundVolume);
+					beepingPlaying = true;
+					
+				}
+				
+			} else {
+				
+				AssetLoader.sndAirLow.stop();
+				beepingPlaying = false;
+				
+			}
+			
+		} else {
+			
+			AssetLoader.sndAirLow.stop();
+			beepingPlaying = false;
+			
 		}
 		
 	}
@@ -270,6 +296,9 @@ public class Submarine extends Entity {
 						bubbleTweenFrames = startBubbleTweenFrames;
 						superBoostCooldown = 0;
 						bubbleTimer = 0;
+						nextScore = 1000;
+						if (((GMTKJamWorld)getWorld()).isStarted())
+							AssetLoader.sndAirGain.play(AssetLoader.soundVolume);
 						
 					}
 					
@@ -277,9 +306,17 @@ public class Submarine extends Entity {
 					
 					if (invincibilityTimer <= 0) {
 						
-						if (superBoostCooldown > 0)
+						if (superBoostCooldown > 0) {
+							
 							((Enemy)entity).burst();
-						else {
+							if (!(entity instanceof CrumblyWall)) {
+								
+								((GMTKJamWorld)getWorld()).addRawScore(nextScore);
+								nextScore += 1000;
+								
+							}
+							
+						} else {
 							
 							recoil(entity.getPos(true));
 							bubbleTimer = 0;
@@ -291,6 +328,7 @@ public class Submarine extends Entity {
 								
 							}
 							((Enemy)entity).bump();
+							nextScore = 1000;
 							
 						}
 						
@@ -341,6 +379,9 @@ public class Submarine extends Entity {
 			setSprite(AssetLoader.spriteSubmarine);
 			setVisible(false);
 			((GMTKJamWorld)getWorld()).getMonster().teleport();
+			((GMTKJamWorld)getWorld()).haltTimerBonus();
+			AssetLoader.sndDeath.play(AssetLoader.soundVolume);
+			AssetLoader.sndCharging.stop();
 			for (int i = 0; i < 5; i++) {
 				
 				ParticleBubble explosion = new ParticleBubble(getWorld());
@@ -367,6 +408,7 @@ public class Submarine extends Entity {
 		cooldownLeft = (int)(charge * chargeCooldownMultiplier);
 		float multiplier = chargeMultiplier;
 		bubbleTimer = (int)(superBoostAttackDuration * charge / maxCharge);
+		AssetLoader.sndCharging.stop();
 		if (charge >= superChargeThreshold) {
 			
 			multiplier += superChargeMultiplier;
@@ -374,8 +416,10 @@ public class Submarine extends Entity {
 			superCooldown = true;
 			superBoostCooldown = (int)superBoostAttackDuration;
 			bubbleTimer = (int)superBoostAttackDuration;
+			AssetLoader.sndSuperBurst.play(AssetLoader.soundVolume);
 			
-		}
+		} else
+			AssetLoader.sndBurst.play(AssetLoader.soundVolume);
 		float boostSpeed = -charge * multiplier - minChargeSpeed;
 		if (stickBubble != null) {
 			
@@ -476,6 +520,12 @@ public class Submarine extends Entity {
 	public boolean isDead() {
 		
 		return dead;
+		
+	}
+
+	public int getCombo() {
+		
+		return (nextScore / 1000 - 1);
 		
 	}
 	

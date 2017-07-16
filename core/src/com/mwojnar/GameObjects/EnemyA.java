@@ -105,6 +105,7 @@ public class EnemyA extends Enemy {
 	public void burst() {
 		
 		destroy();
+		AssetLoader.sndKillFish.play(AssetLoader.soundVolume);
 		
 		for (int i = 0; i < 5; i++) {
 			

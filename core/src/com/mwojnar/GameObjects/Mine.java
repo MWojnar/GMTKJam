@@ -45,6 +45,7 @@ public class Mine extends Enemy {
 	public void burst() {
 		
 		destroy();
+		AssetLoader.sndKillMine.play(AssetLoader.soundVolume);
 		
 		for (int i = 0; i < 5; i++) {
 			
