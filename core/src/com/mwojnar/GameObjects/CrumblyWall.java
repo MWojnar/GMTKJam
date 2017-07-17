@@ -37,6 +37,7 @@ public class CrumblyWall extends Enemy {
 	public void burst() {
 		
 		destroy();
+		AssetLoader.sndBreakBlock.play(AssetLoader.soundVolume);
 		
 		for (int i = 0; i < 5; i++) {
 			

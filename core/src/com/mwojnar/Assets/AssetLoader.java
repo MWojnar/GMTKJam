@@ -39,18 +39,19 @@ public class AssetLoader {
 								backWallTexture, parallaxWall1Texture, parallaxWall2Texture, enemyAParticleTexture,
 								mineParticleTexture, crumblyWallParticleTexture, monsterTexture, distanceHudTexture,
 								explosionRedSmallTexture, explosionRedLargeTexture, explosionYellowSmallTexture,
-								explosionYellowLargeTexture, titleScreenTexture;
+								explosionYellowLargeTexture, titleScreenTexture, spacebarTexture,
+								monsterHeadTexture;
 	public static TextureRegion whiteTexture, yellowTexture, redTexture, blackTexture;
 	public static Sprite spriteSubmarine, spriteEnemyA, spriteBubble, spriteWall, spriteChargeMeter,
 						 spriteSubmarineCharging, spriteBubblePop, spriteAirMeter, spriteSubmarineAttackFire,
 						 spriteParticleBubble, spriteMine, spriteCrumblyWall, spriteEnemyAParticle, spriteMineParticle,
 						 spriteCrumblyWallParticle, spriteMonster, spriteDistanceHud, spriteExplosionRedSmall,
 						 spriteExplosionRedLarge, spriteExplosionYellowSmall, spriteExplosionYellowLarge,
-						 spriteTitleScreen;
+						 spriteTitleScreen, spriteSpacebar, spriteMonsterHead;
 	public static Sprite spriteWhite, spriteYellow, spriteRed, spriteBlack;
 	public static BackgroundTemplate background, backWall, parallaxWall1, parallaxWall2;
 	public static Sound sndAirGain, sndAirLow, sndBubblePop, sndBurst, sndCharging, sndDeath, sndKillFish, sndKillMine,
-						sndMonster1, sndMonster2, sndMonster3, sndSuperBurst;
+						sndMonster1, sndMonster2, sndMonster3, sndSuperBurst, sndBreakBlock, sndBump, sndHurt;
 	public static SoundGroup sndGrpMonster;
 	public static MusicTemplate mainMusic;
 	public static MusicHandler musicHandler;
@@ -112,7 +113,7 @@ public class AssetLoader {
 		
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("data/Fonts/pixel font-7.ttf"));
 		parameter = new FreeTypeFontParameter();
-		parameter.size = 144;
+		parameter.size = 64;
 		parameter.flip = true;
 		parameter.color = Color.WHITE;
 		titleFont = generator.generateFont(parameter);
@@ -134,6 +135,9 @@ public class AssetLoader {
 		assetManager.load("data/Sounds/snd_monster2.mp3", com.badlogic.gdx.audio.Sound.class);
 		assetManager.load("data/Sounds/snd_monster3.mp3", com.badlogic.gdx.audio.Sound.class);
 		assetManager.load("data/Sounds/snd_superburst.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_breakBlock.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_bumpBlock.mp3", com.badlogic.gdx.audio.Sound.class);
+		assetManager.load("data/Sounds/snd_hurt.mp3", com.badlogic.gdx.audio.Sound.class);
 		
 	}
 	
@@ -151,6 +155,9 @@ public class AssetLoader {
 		sndMonster2 = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_monster2.mp3", com.badlogic.gdx.audio.Sound.class));
 		sndMonster3 = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_monster3.mp3", com.badlogic.gdx.audio.Sound.class));
 		sndSuperBurst = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_superburst.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndBreakBlock = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_breakBlock.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndBump = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_bumpBlock.mp3", com.badlogic.gdx.audio.Sound.class));
+		sndHurt = GMTKJamGame.createSound(assetManager.get("data/Sounds/snd_hurt.mp3", com.badlogic.gdx.audio.Sound.class));
 		
 		sndGrpMonster = new SoundGroup();
 		sndGrpMonster.add(sndMonster1);
@@ -199,6 +206,8 @@ public class AssetLoader {
 		explosionYellowSmallTexture = atlas.findRegion("spr_explosion2Y");
 		explosionYellowLargeTexture = atlas.findRegion("spr_explosion1Y");
 		titleScreenTexture = atlas.findRegion("Logo");
+		spacebarTexture = atlas.findRegion("spr_spacebar");
+		monsterHeadTexture = atlas.findRegion("spr_monster-sheet");
 		
 		backgroundTexture = atlas.findRegion("background");
 		backWallTexture = atlas.findRegion("ts_walls");
@@ -235,6 +244,8 @@ public class AssetLoader {
 		spriteExplosionYellowSmall = new Sprite(explosionYellowSmallTexture, 8);
 		spriteExplosionYellowLarge = new Sprite(explosionYellowLargeTexture, 5);
 		spriteTitleScreen = new Sprite(titleScreenTexture, 1);
+		spriteSpacebar = new Sprite(spacebarTexture, 2);
+		spriteMonsterHead = new Sprite(monsterHeadTexture, 7);
 		
 		spriteWall = new Sprite(wallTexture, 1);
 		

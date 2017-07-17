@@ -53,67 +53,31 @@ public class Submarine extends Entity {
 	
 	private void loadCustomAttributes() {
 		
-		JSONParser jsonParser = new JSONParser();
-		try {
-			
-			JSONObject jsonObject = (JSONObject)jsonParser.parse(new FileReader("SubmarineAttributes.txt"));
-			chargeSpeed = Float.parseFloat((String)jsonObject.get("Speed of charging"));
-			horizontalMaxSpeed = Float.parseFloat((String)jsonObject.get("Horizontal max speed"));
-			horizontalAcceleration = Float.parseFloat((String)jsonObject.get("Horizontal acceleration"));
-			horizontalDeceleration = Float.parseFloat((String)jsonObject.get("Horizontal deceleration"));
-			chargeMultiplier = Float.parseFloat((String)jsonObject.get("Speed a charge sends you upward"));
-			superChargeMultiplier = Float.parseFloat((String)jsonObject.get("Speed added by super charge"));
-			superChargeThreshold = Float.parseFloat((String)jsonObject.get("Amount of Charge that equals Super Charge"));
-			maxCharge = Float.parseFloat((String)jsonObject.get("Max Charge"));
-			boostDeceleration = Float.parseFloat((String)jsonObject.get("Boost Charge decelerate"));
-			verticalDeceleration = Float.parseFloat((String)jsonObject.get("Normal deceleration"));
-			airLossRate = Float.parseFloat((String)jsonObject.get("Air decrease speed"));
-			airLossFromEnemy = Float.parseFloat((String)jsonObject.get("Air hit reduction"));
-			airGainRate = Float.parseFloat((String)jsonObject.get("Air increase speed in bubble"));
-			maxAir = Float.parseFloat((String)jsonObject.get("Max air"));
-			minVerticalSpeed = Float.parseFloat((String)jsonObject.get("Minimum vertical speed"));
-			maxVerticalSpeed = Float.parseFloat((String)jsonObject.get("Maximum vertical speed"));
-			chargeCooldownMultiplier = Float.parseFloat((String)jsonObject.get("Charge cooldown multiplier"));
-			superChargeCooldownAddition = Float.parseFloat((String)jsonObject.get("Super Charge cooldown add"));
-			minChargeSpeed = Float.parseFloat((String)jsonObject.get("Minimum speed a charge sends you upward"));
-			bubbleChargeSpeed = Float.parseFloat((String)jsonObject.get("Charge Speed in bubble"));
-			bubbleAddSpeed = Float.parseFloat((String)jsonObject.get("Bubble add speed"));
-			superBoostAttackDuration = Float.parseFloat((String)jsonObject.get("Super Boost Attack duration"));
-			
-			air = maxAir;
-			currentMaxVerticalSpeed = maxVerticalSpeed;
-			
-		} catch (Exception e) {
-			
-			chargeSpeed = 0.1f;
-			horizontalMaxSpeed = 4.0f;
-			horizontalAcceleration = 1.0f;
-			horizontalDeceleration = 0.5f;
-			chargeMultiplier = 1.0f;
-			superChargeMultiplier = 0.5f;
-			superChargeThreshold = 5.0f;
-			maxCharge = 7.0f;
-			boostDeceleration = 0.06f;
-			verticalDeceleration = 0.04f;
-			airLossRate = 0.01f;
-			airLossFromEnemy = 0.1f;
-			airGainRate = 0.04f;
-			maxAir = 10.0f;
-			minVerticalSpeed = 0.1f;
-			maxVerticalSpeed = 10.0f;
-			chargeCooldownMultiplier = 10.0f;
-			superChargeCooldownAddition = 120.0f;
-			minChargeSpeed = 2.5f;
-			bubbleChargeSpeed = 0.175f;
-			bubbleAddSpeed = 2.0f;
-			superBoostAttackDuration = 150.0f;
-			
-			air = maxAir;
-			currentMaxVerticalSpeed = maxVerticalSpeed;
-
-			e.printStackTrace();
-			
-		}
+		chargeSpeed = 0.1f;
+		horizontalMaxSpeed = 4.0f;
+		horizontalAcceleration = 1.0f;
+		horizontalDeceleration = 0.5f;
+		chargeMultiplier = 1.0f;
+		superChargeMultiplier = 0.5f;
+		superChargeThreshold = 5.0f;
+		maxCharge = 7.0f;
+		boostDeceleration = 0.055f;
+		verticalDeceleration = 0.04f;
+		airLossRate = 0.01f;
+		airLossFromEnemy = 0.1f;
+		airGainRate = 0.04f;
+		maxAir = 10.0f;
+		minVerticalSpeed = 0.1f;
+		maxVerticalSpeed = 10.0f;
+		chargeCooldownMultiplier = 10.0f;
+		superChargeCooldownAddition = 120.0f;
+		minChargeSpeed = 2.5f;
+		bubbleChargeSpeed = 0.175f;
+		bubbleAddSpeed = 2.0f;
+		superBoostAttackDuration = 150.0f;
+		
+		air = maxAir;
+		currentMaxVerticalSpeed = maxVerticalSpeed;
 		
 	}
 
@@ -313,7 +277,7 @@ public class Submarine extends Entity {
 								
 								((GMTKJamWorld)getWorld()).addRawScore(nextScore);
 								nextScore += 1000;
-								setGridVelocity(getGridVelocity().x, getGridVelocity().y - 2.0f);
+								setGridVelocity(getGridVelocity().x, getGridVelocity().y - 1.0f);
 								
 							}
 							
@@ -326,6 +290,11 @@ public class Submarine extends Entity {
 								invincibilityTimer = invincibilityTimerMax;
 								air -= airLossFromEnemy;
 								charge = 0;
+								AssetLoader.sndHurt.play(AssetLoader.soundVolume);
+								
+							} else {
+								
+								AssetLoader.sndBump.play(AssetLoader.soundVolume * 0.5f);
 								
 							}
 							((Enemy)entity).bump();

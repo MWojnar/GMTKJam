@@ -56,6 +56,7 @@ public class Hud extends Entity {
 	private void drawScore(GameRenderer renderer, float alpha) {
 
 		Submarine sub = ((GMTKJamWorld)getWorld()).getSubmarine();
+		AssetLoader.debugFont.setColor(1.0f, 1.0f, 1.0f, alpha);
 		AssetLoader.debugFont.draw(renderer.getBatcher(), "SCORE", getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 2.0f);
 		AssetLoader.debugFont.draw(renderer.getBatcher(), Integer.toString(((GMTKJamWorld)getWorld()).getRawScore()), getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 20.0f);
 		AssetLoader.debugFont.draw(renderer.getBatcher(), "COMBO", getWorld().getCamPos(false).x + 2.0f, getWorld().getCamPos(false).y + 56.0f);

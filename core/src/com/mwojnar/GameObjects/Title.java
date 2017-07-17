@@ -32,6 +32,7 @@ public class Title extends Entity {
 	public void draw(GameRenderer renderer) {
 		
 		getSprite().drawAbsolute(getWorld().getGameDimensions().x / 2.0f - getSprite().getWidth() / 2.0f, getWorld().getGameDimensions().y / 2.0f - getSprite().getHeight() / 2.0f, 0, getScale(), getScale(), getRotation(), getSprite().getWidth() / 2.0f, getSprite().getHeight() / 2.0f, renderer);
+		AssetLoader.spriteSpacebar.drawAbsolute(getWorld().getGameDimensions().x / 2.0f - AssetLoader.spriteSpacebar.getWidth() / 2.0f, 450.0f, (int)(((GMTKJamWorld)getWorld()).getFramesSinceLevelCreation() % 24) / 12, 1.0f, 1.0f, 0.0f, 0.0f, 0.0f, renderer);
 		
 	}
 	
