@@ -1,21 +1,16 @@
 package com.mwojnar.Game.desktop;
 
-import com.badlogic.gdx.Files.FileType;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.mwojnar.Screens.GameScreen;
 import com.mwojnar.Game.GMTKJamGame;
 
 public class DesktopLauncher {
     public static void main (String[] arg) {
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.title = "Aqua Ascent";
-        config.height = 640;
-        config.width = 400;
-        config.addIcon("data/Images/icon128.png", FileType.Internal);
-        config.addIcon("data/Images/icon32.png", FileType.Internal);
-        config.addIcon("data/Images/icon16.png", FileType.Internal);
-        //config.fullscreen = true;
-        new LwjglApplication(new GMTKJamGame(arg, GameScreen.class), config);
+        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
+        config.setTitle("Aqua Ascent");
+        config.setWindowedMode(400, 640);
+        config.setWindowIcon("data/Images/icon128.png", "data/Images/icon32.png", "data/Images/icon16.png");
+        new Lwjgl3Application(new GMTKJamGame(arg, GameScreen.class), config);
     }
 }
